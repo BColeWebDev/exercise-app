@@ -1,0 +1,29 @@
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+# Mac OS
+.DS_Store
+
+.env
+
+# Visual Studio Code Settings
+.vscode/settings.json
+
+# Local Netlify folder
+.netlify
+
+# dependencies
+/node_modules
+/.pnp
+.pnp.js
+
+# testing
+/coverage
+
+# production
+/build
+
+
+
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
