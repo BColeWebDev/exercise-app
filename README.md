@@ -1,6 +1,6 @@
 # Exercise App
 
-Exercise App is a Full Stack Application that allows users view specific exercises and create workout plans.
+Exercise App is a Full Stack Application that allows users view specific exercises and create workout plans. Final Project for FullSail University
 
 # Features:
 
