@@ -26,7 +26,7 @@ const loginIsValid = async (req, res, next) => {
         next()
     }
     else {
-        res.send({ error: error.details })
+        res.status(400).send({ error: error.details[0] })
     }
 }
 

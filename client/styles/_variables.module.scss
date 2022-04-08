@@ -1,0 +1,24 @@
+// Primary Colors
+$primary-color: #de9e36;
+
+// Secondary Colors
+$secondary-color: #03dac5;
+
+// Surfaces colors
+$surface-color: #292929;
+
+// error message color
+$error-color: #9a1010;
+
+// success message color
+$success-color: #bcd500;
+
+$font-family: "Poppins";
+
+:export {
+  primaryColor: $primary-color;
+  secondaryColor: $secondary-color;
+  surfaceColor: $surface-color;
+  errorColor: $error-color;
+  successColor: $success-color;
+}

@@ -61,7 +61,7 @@ const loginUser = async (req, res) => {
             { model: Regiment, include: [Training_Day] }
         ]
     })
-    console.log(user)
+
 
     // compares user and client password and db password 
 
@@ -69,7 +69,8 @@ const loginUser = async (req, res) => {
         res.json(
             {
                 id: user.id,
-                name: user.name,
+                firstname: user.first_name,
+                lastname: user.last_name,
                 email: user.email,
                 bio: user.bio,
                 avatar: user.avatar,

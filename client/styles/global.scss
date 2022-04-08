@@ -1,0 +1,57 @@
+@import "./variables.module";
+
+html,
+body {
+  padding: 0;
+  margin: 0;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  font-family: Arial, Helvetica, sans-serif !important;
+}
+.hero-img {
+  background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+    url(../public/luis-reyes-mTorQ9gFfOg-unsplash.jpg);
+  height: 50vh;
+  $fontFamily: "Poppins";
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: relative;
+}
+.icon {
+  font-size: 30px;
+  margin-bottom: 2rem;
+  color: aqua;
+}
+.css-1qpetk2-MuiFormLabel-root {
+  color: rgb(226, 226, 226);
+  font-weight: 600;
+}
+.MuiFormGroup-root .css-dmmspl-MuiFormGroup-root {
+  color: rgb(202, 202, 202);
+}
+.MuiFormControl-root .css-1nrlq1o-MuiFormControl-root {
+  margin-bottom: 1.125rem;
+}
+
+.loadingSpinnerContainer {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 5000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
