@@ -6,6 +6,107 @@
   successColor: #bcd500;
 }
 
+.dashboard-body {
+  padding-left: 0.25rem;
+  padding-right: 0.25rem;
+}
+
+.dashboard-body__grid {
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: 1fr;
+      grid-template-columns: 1fr;
+  gap: 10px;
+  -ms-grid-columns: 1fr 1fr;
+      grid-template-columns: 1fr 1fr;
+}
+
+.dashboard-body__list {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+.dashboard-card {
+  margin-bottom: 1.125rem;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.dashboard-card__list {
+  padding: 0.7rem;
+}
+
+.dashboard-card__grid {
+  padding: 1rem;
+}
+
+.nav-items {
+  margin-bottom: 15px;
+}
+
+@media (min-width: 768px) {
+  .custom-regiments {
+    border-right: 1px solid gold;
+  }
+  .dashboard {
+    height: 930px;
+    display: -ms-grid;
+    display: grid;
+    -ms-grid-columns: 0fr 3fr;
+        grid-template-columns: 0fr 3fr;
+  }
+  .side-nav-content {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+  }
+  .side-nav {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+    -ms-flex-pack: distribute;
+        justify-content: space-around;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+  }
+  .side-nav .navbar {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+  }
+  .side-nav .navbar .nav-items {
+    padding: 1.75rem;
+  }
+  .side-nav .navbar .nav-items li {
+    cursor: pointer;
+  }
+}
+
 html,
 body {
   padding: 0;
@@ -37,8 +138,7 @@ a {
 
 .icon {
   font-size: 30px;
-  margin-bottom: 2rem;
-  color: aqua;
+  color: #03dac5;
 }
 
 .css-1qpetk2-MuiFormLabel-root {

@@ -1,5 +1,5 @@
 @import "./variables.module";
-
+@import "./dashboard.module";
 html,
 body {
   padding: 0;
@@ -29,9 +29,9 @@ a {
 }
 .icon {
   font-size: 30px;
-  margin-bottom: 2rem;
-  color: aqua;
+  color: $secondary-color;
 }
+
 .css-1qpetk2-MuiFormLabel-root {
   color: rgb(226, 226, 226);
   font-weight: 600;
