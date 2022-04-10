@@ -1,10 +1,12 @@
 const { User, Regiment, Training_Day } = require("../models")
 const { hash, compare } = require('../config/hash')
 const { generateToken } = require("../config/jwt")
-const { v4: uuidv4 } = require('uuid');
+const { v4: uuidv4 } = require('uuid')
+const awsServices = require('../config/aws')
 
-// use uuid and hash password to add to database
+
 const registerUser = async (req, res) => {
+    // use uuid and hash password to add to database
 
     // check to see if user already exist
     const userExist = await User.findOne({ where: { email: req.body.email } })
@@ -89,11 +91,31 @@ const authOLogin = async (req, res) => {
 }
 
 
-// const updateUser = async (req, res) => {
-//     const user = await
-// }
-// const deleteUser = async (req, res) => {
+// Get Avatar Image
+const getAvatar = async (req, res) => {
+    res.json("Get Avatar")
+}
 
-// }
+// Creating Image Avatar
+const createAvatar = async (req, res) => {
+    const file = req.file
+    const description = req.body.description
 
-module.exports = { registerUser, loginUser, authOLogin }
+
+    try {
+        url = await awsServices(fileName, userId)
+        res.status(200).json(url)
+    } catch (error) {
+        res.status(400).json(error)
+    }
+}
+// Updating Avatar Image 
+const updateAvatar = async (req, res) => {
+    res.json("Update Avatar")
+}
+
+
+
+
+
+module.exports = { registerUser, loginUser, authOLogin, getAvatar, createAvatar, updateAvatar }
