@@ -21,6 +21,7 @@
   },
   "homepage": "https://github.com/BColeWebDev/exercise-app#readme",
   "dependencies": {
+    "aws-sdk": "^2.1111.0",
     "bcrypt": "^5.0.1",
     "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",
@@ -29,6 +30,7 @@
     "google-auth-library": "^7.14.0",
     "joi": "^17.6.0",
     "jsonwebtoken": "^8.5.1",
+    "multer": "^1.4.4",
     "mysql2": "^2.3.3",
     "needle": "^3.0.0",
     "react-toastify": "^8.2.0",
