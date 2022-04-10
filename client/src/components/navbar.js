@@ -2,25 +2,18 @@ import { useState } from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
-import Switch from '@mui/material/Switch';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import FormGroup from '@mui/material/FormGroup';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import IconButton from '@mui/material/IconButton';
-import Image from 'next/image'
-import logo from "../../public/logo-smaller-white.svg"
 import MenuIcon from '@mui/icons-material/Menu';
+import { useSelector } from "react-redux";
 import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
-import { Button, Container } from '@mui/material';
-import Link from 'next/link';
+import { Button } from '@mui/material';
+import Logo from './logo';
 const Navbar = () => {
-    const [auth, setAuth] = useState(true);
+    const { user } = useSelector((state) => state.auth)
     const [anchorEl, setAnchorEl] = useState(null);
 
-    const handleChange = (event) => {
-        setAuth(event.target.checked);
-    };
 
     const handleMenu = (event) => {
         setAnchorEl(event.currentTarget);
@@ -31,21 +24,15 @@ const Navbar = () => {
     };
 
     return (<>
-        <Box sx={{ flexGrow: 1 }} component="nav">
-            <AppBar position="static" sx={{}} >
+        <Box sx={{ flexGrow: 1, }} component="nav">
+            <AppBar position="static"  >
                 <Toolbar sx={{ display: 'flex', justifyContent: 'space-between', backgroundColor: '#121212' }}>
-                    <Link href="/">
-                        <a>
-                            <Image src={logo} width={242.25} height={72.5} priority />
-                        </a>
-                    </Link>
-                    {auth ?
+                    <Logo route={'/'} />
+                    {user === null ?
                         <>
-                            <Box sx={{ display: { xs: 'none', md: 'block' } }}>
-
+                            <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
                                 <Button href='/login' variant='contained' sx={{ marginRight: '10px' }}>Login</Button>
                                 <Button href='/register' variant='contained' color="secondary" >Register</Button>
-
                             </Box>
                             <IconButton sx={{ display: { md: 'none' }, color: "white" }}
                                 aria-label="account of current user"
