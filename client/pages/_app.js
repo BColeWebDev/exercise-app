@@ -31,7 +31,6 @@ export default function MyApp(props) {
 				consistent, and simple baseline to
 				build upon. */}
           <CssBaseline />
-          <Navbar />
           <Component {...pageProps} />
         </ThemeProvider>
       </CacheProvider>
