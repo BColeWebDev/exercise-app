@@ -1,5 +1,5 @@
 const Exercises = () => {
-    return (<h1></h1>);
+    return (<h1>Exercise</h1>);
 }
  
 export default Exercises;
