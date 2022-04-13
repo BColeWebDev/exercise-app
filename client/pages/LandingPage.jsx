@@ -6,13 +6,12 @@ import { Box } from "@mui/system";
 import Navbar from "../src/components/navbar"
 const LandingPage = () => {
     return (   <>
-                <Navbar />
-
+                <Navbar routes={{login:"auth/login",register:"auth/register"}} />
         <Hero />
         {/* About Us */}
   
   
-        <Box sx={{ height: '30vh', marginTop: '10px', padding: '2rem' }}>
+        <Box sx={{ marginTop: '10px', padding: '2rem' }}>
           <Typography variant="h3" component="h2" >
             About Us
           </Typography>

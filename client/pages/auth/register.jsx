@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect} from 'react';
 import {
     Box,
     TextField,
@@ -14,10 +14,19 @@ import {
     Container,
     TextareaAutosize
 } from '@mui/material';
+import Navbar from '../../src/components/navbar';
+import {useRouter} from "next/router"
+import{useSelector, useDispatch}from "react-redux"
+import{error, success} from "../../src/components/notifications"
+import Spinner from "../../src/components/spinner"
+import {reset,register} from"../../src/redux/features/auth/authSlice"
+import { ToastContainer} from "react-toastify"
 
 
 const SignUp = () => {
-
+    const router  = useRouter()
+    const dispatch = useDispatch()
+    const { isLoading , isError, isSuccess, message} = useSelector((state)=>state.auth)
 
     const initalState = {
         first_name: "",
@@ -28,8 +37,20 @@ const SignUp = () => {
         renter_password: "",
     }
 
+    useEffect(() => {
+        if(isError){
+            error(message)
+        }
+        if(isSuccess){
+            success("User Created!")
+            router.push("/")
+        }
+        dispatch(reset())
+        
+    }, [isLoading,isError, isSuccess, message ]);
+
     const [form, setForm] = useState(initalState);
-    const [value, setValue] = useState('female');
+    const [value, setValue] = useState('beginner');
 
     const handleChange = (event) => {
         setValue(event.target.value);
@@ -45,7 +66,6 @@ const SignUp = () => {
     } = form
 
     const onChange = (e) => {
-
         setForm((prevState) => ({
             ...prevState,
             [e.target.name]: e.target.value,
@@ -54,12 +74,29 @@ const SignUp = () => {
 
     const hanldeSubmit = () => {
         const obj = { ...form, value }
-        console.log(obj)
+        dispatch(register(obj))
 
     }
-    return (<FormControl component="form"
+    if(isLoading){
+        return <Spinner/>
+    }
+
+    return (<>
+        <Navbar  routes={{login:"login",register:"register"}} />
+
+        
+    <FormControl component="form"
         onSubmit={e => {
             e.preventDefault()
+           
+            //if password does not match
+                              
+            password !== renter_password ?
+                     
+            error("Error password does not match!")
+        
+            :
+            // handle submit of form
             hanldeSubmit()
         }
         }
@@ -206,7 +243,10 @@ const SignUp = () => {
             <Button variant="contained" href="/auth/login" >Login</Button>
         </ButtonGroup>
         </Container>
-    </FormControl >);
+    </FormControl >
+    <ToastContainer/>
+    </>
+    );
 }
 
 export default SignUp;

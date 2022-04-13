@@ -1,16 +1,22 @@
 import { Container,  Typography, Button, IconButton ,Box, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Card, Fab } from "@mui/material";
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch} from "react-redux";
 import FitnessCenterIcon from"@mui/icons-material/FitnessCenter"
 import Spinner from "../../src/components/spinner"
 import FormatListBulletedIcon from "@mui/icons-material/FormatListBulleted";
 import GridViewIcon from "@mui/icons-material/GridView";
 import Regiment from "../../src/components/Regiment";
-import Navbar from "../../src/components/navbar"
 import Logo from "../../src/components/logo";
+import {getExercises, reset} from "../../src/redux/features/exercises/exerciseSlice"
+import Navbar from "../../src/components/navbar";
 
 const Dashboard = () => {
-    const { user } = useSelector((state) => state.auth)
+    const dispatch = useDispatch()
+    const { user, token } = useSelector((state) => state.auth)
+    // TODO:Create exercise slice 
+    // const {exercises, isLoading , isError, message} = useSelector((state)=> state.exercises)
+    // console.log(exercises)
+   
     const initalState = {list:"secondary", grid:"info",display:"dashboard-body__list", cardDisplay:"dashboard-card__list"}
     const [view, setview] = useState(initalState);
 
@@ -23,16 +29,37 @@ const Dashboard = () => {
         }
     }    
 
-    return (<>{user ?
+    // useEffect(() => {
+    //     if (isError) {
+    //       console.log(message)
+    //     }
+    
+    //     if (!user || !token) {
+    //       navigate('/login')
+    //     }
+    
+    //     // dispatch(getExercises())
+    
+    //     return () => {
+    //       dispatch(reset())
+    //     }
+    //   }, [user, isError, message, dispatch])
+
+    //   if (isLoading) {
+    //     return <Spinner />
+    //   }    
+
+
+    return (<>
+    
+    {user ?
     //  {/* Dashboard */}
+    <>
+        <Navbar/>
     <Box component={'section'}className="dashboard" >
        {/* Side Nav  */}
-       
-       {/* <Navbar/> */}
         <Box className="side-nav" sx={{backgroundColor:'#292929',display:{xs:'none'}}}>
-        <Box>
-        <Logo route={'/dashboard'}/>
-        </Box>
+       
         <Box className="side-nav-content">
             <Box className="navbar" component={'nav'}>
                 <List>
@@ -98,6 +125,8 @@ const Dashboard = () => {
 </Box>         
 </Box>
 </Box>
+    </>
+    
     :
     <>
     {<Spinner/>}

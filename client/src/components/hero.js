@@ -14,7 +14,7 @@ const Hero = () => {
             <Box style={{ marginBottom: '1.125rem', textAlign: 'center' }}>
                 <Typography variant="h4" component="h2">Crush Your Goals!</Typography>
             </Box>
-            <Button variant="contained" sx={{ fontWeight: 'bolder' }} color="primary" href={user === null ? "/auth/login" : "/auth/dashboard"}>Get Started</Button>
+            <Button variant="contained" sx={{ fontWeight: 'bolder' }} color="primary" href={user === null ? "/auth/login" : "/dashboard"}>Get Started</Button>
         </div >
     </>);
 }

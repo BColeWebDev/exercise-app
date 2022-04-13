@@ -1,20 +1,25 @@
 import { useState, useEffect } from 'react';
 import { Box, TextField, Typography, Button, ButtonGroup, FormControl, Container } from '@mui/material';
-import {toast, ToastContainer} from "react-toastify"
+import { ToastContainer} from "react-toastify"
 import{useSelector, useDispatch}from "react-redux";
 import {login, reset} from"../../src/redux/features/auth/authSlice";
-import {success} from "../../src/components/notifications"
+import {success, error} from "../../src/components/notifications"
 import Spinner from '../../src/components/spinner';
+import Navbar from '../../src/components/navbar';
+import {useRouter} from "next/router"
 
 const Login = () => {
+    // Global State login
+    const { user, token, isLoading , isError, isSuccess, message} = useSelector((state)=>state.auth)
     const dispatch = useDispatch()
+    const router  = useRouter()
+
     // Login State
     const initalState = { email: "", password: "" }
     const [form, setForm] = useState(initalState);
     const { email, password } = form
 
-    // Global State login
-    const { user , isLoading , isError, isSuccess, message} = useSelector((state)=>state.auth)
+    
 
     const onChange = (e) => {
         setForm((prevState) => ({
@@ -27,30 +32,31 @@ const Login = () => {
     // if depencies changes this will run
 useEffect(() => {
     if(isError){
-        toast.error(message)
+       error(message)
     }
-    // register successful or user logged in
+    // // register successful or user logged in go to dashboard
     if(isSuccess || user){
-        success("Success! user logged in")
+        router.push('/dashboard')
     }
     // reset global state
     dispatch(reset())
 
-}, [user, isError, isSuccess, message, dispatch]);
+}, [user, token, isError, isSuccess, message, dispatch]);
 
-    const hanldeSubmit = () => {
-
+const hanldeSubmit = () => {
+    
+    dispatch(login(form))
         // validating user data
-        dispatch(login(form))
+        
+}
 
-    }
     if(isLoading){
         return <Spinner/>
     }
     
 
     return (<>
-
+        <Navbar  routes={{login:"login",register:"register"}} />
         <FormControl component="form"
             onSubmit={e => {
                 e.preventDefault()

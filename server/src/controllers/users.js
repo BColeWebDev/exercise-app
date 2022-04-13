@@ -4,15 +4,17 @@ const { generateToken } = require("../config/jwt")
 const { v4: uuidv4 } = require('uuid')
 const awsServices = require('../config/aws')
 
+let error = { details: [] };
 
 const registerUser = async (req, res) => {
     // use uuid and hash password to add to database
 
     // check to see if user already exist
     const userExist = await User.findOne({ where: { email: req.body.email } })
-    console.log(userExist)
     if (userExist) {
-        res.json({ error: "user already exist" })
+        error.details.push({ message: "User already exists!" })
+        res.status(409).json({ errors: error.details.map(err => err.message) })
+        error.details = []
     }
     else {
         // destrutures obj
@@ -37,7 +39,7 @@ const registerUser = async (req, res) => {
         })
         // if user exist 
         if (user) {
-            res.json(
+            res.status(200).json(
                 {
                     id,
                     first_name,
@@ -49,7 +51,9 @@ const registerUser = async (req, res) => {
                 })
 
         } else {
-            res.json('Invalid user data')
+            error.details.push({ message: "Invalid user data" })
+            res.status(400).json({ errors: error.details.map(err => err.message) })
+            error.details = []
         }
     }
 }
@@ -68,7 +72,7 @@ const loginUser = async (req, res) => {
     // compares user and client password and db password 
 
     if (user && (await compare(password, user.password))) {
-        res.json(
+        res.status(200).json(
             {
                 id: user.id,
                 firstname: user.first_name,
@@ -82,12 +86,14 @@ const loginUser = async (req, res) => {
             }
         )
     } else {
-        res.json("Invalid Credentials")
+        error.details.push({ message: 'Invalid Credentials email or password is incorrect' })
+        res.status(403).json({ errors: error.details.map(err => err.message) })
+        error.details = []
     }
 
 }
 const authOLogin = async (req, res) => {
-    res.json('google login')
+    resjson('google login')
 }
 
 
@@ -100,8 +106,6 @@ const getAvatar = async (req, res) => {
 const createAvatar = async (req, res) => {
     const file = req.file
     const description = req.body.description
-
-
     try {
         url = await awsServices(fileName, userId)
         res.status(200).json(url)

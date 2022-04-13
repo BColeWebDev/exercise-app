@@ -7,12 +7,11 @@ const registerIsValid = async (req, res, next) => {
     // goes to next middlware if correct
 
     const { error } = await validation.registerValidation(req.body)
-    if (error === undefined) {
+    error === undefined ?
         next()
-    }
-    else {
-        res.send({ error: error.details })
-    }
+        :
+        res.status(400).json({ errors: error.details.map(err => err.message) })
+
 
 }
 
@@ -22,12 +21,11 @@ const loginIsValid = async (req, res, next) => {
     const { error } = await validation.loginValidation(req.body)
     // returns error if credentials are incorrect
     // goes to next middlware if correct
-    if (error === undefined) {
+    error === undefined ?
         next()
-    }
-    else {
-        res.status(400).send({ error: error.details[0] })
-    }
+        :
+        res.status(400).json({ errors: error.details.map(err => err.message) })
+    console.log(error)
 }
 
 const regimentIsValid = async (req, res, next) => {
@@ -35,14 +33,14 @@ const regimentIsValid = async (req, res, next) => {
     error === undefined ?
         next()
         :
-        res.send({ error: error.details })
+        res.status(400).json({ errors: error.details.map(err => err.message) })
 }
 const DayIsValid = async (req, res, next) => {
     const { error } = await validation.trainingDaysValidation(req.body)
     error === undefined ?
         next()
         :
-        res.send({ error })
+        res.status(400).json({ errors: error.details.map(err => err.message) })
 }
 
 module.exports = { registerIsValid, loginIsValid, regimentIsValid, DayIsValid }

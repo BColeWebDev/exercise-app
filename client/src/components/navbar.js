@@ -10,10 +10,12 @@ import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
 import { Button } from '@mui/material';
 import Logo from './logo';
-const Navbar = () => {
+
+// routes when on different pages
+
+const Navbar = ({ routes }) => {
     const { user } = useSelector((state) => state.auth)
     const [anchorEl, setAnchorEl] = useState(null);
-
 
     const handleMenu = (event) => {
         setAnchorEl(event.currentTarget);
@@ -26,15 +28,18 @@ const Navbar = () => {
     return (<>
         <Box sx={{ flexGrow: 1, }} component="nav">
             <AppBar position="static"  >
-                <Toolbar sx={{ display: 'flex', justifyContent: 'space-between', backgroundColor: '#121212' }}>
-                    <Logo route={'/'} />
+                <Toolbar sx={{ display: 'flex', justifyContent: 'space-between', backgroundColor: '#292929' }}>
+                    <Logo route={user ? "/dashboard" : "/"} />
                     {user === null ?
                         <>
-                            <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
-                                <Button href='/login' variant='contained' sx={{ marginRight: '10px' }}>Login</Button>
-                                <Button href='/register' variant='contained' color="secondary" >Register</Button>
+                            <Box sx={{ display: { xs: 'none', md: "block" } }}>
+
+                                <Button href={routes.login} variant='contained' sx={{ marginRight: '10px' }}>Login</Button>
+                                <Button href={routes.register} variant='contained' color="secondary" >Register</Button>
+
                             </Box>
-                            <IconButton sx={{ display: { md: 'none' }, color: "white" }}
+                            {/* Profile Icon */}
+                            <IconButton sx={{ display: { xs: "block", md: "none" }, color: "white" }}
                                 aria-label="account of current user"
                                 aria-controls="menu-appbar"
                                 aria-haspopup="true"
@@ -48,44 +53,47 @@ const Navbar = () => {
                                 open={Boolean(anchorEl)}
                                 onClose={handleClose}
                             >
-                                <MenuItem  ><Button href="/login" variant="outlined" onClick={handleClose} sx={{ width: '500px', marginBottom: '20px' }}>Login</Button></MenuItem>
-                                <MenuItem onClick={handleClose} ><Button href='/register' variant="contained" color='secondary' sx={{ width: '500px', marginBottom: '20px' }}>Register</Button></MenuItem>
+                                <MenuItem  ><Button href={routes.login} variant="outlined" onClick={handleClose} sx={{ width: '500px', marginBottom: '20px' }}>Login</Button></MenuItem>
+                                <MenuItem onClick={handleClose} ><Button href={routes.register} variant="contained" color='secondary' sx={{ width: '500px', marginBottom: '20px' }}>Register</Button></MenuItem>
                             </Menu>
                         </>
 
                         :
                         <>
-                            <IconButton
-                                size="large"
-                                aria-label="account of current user"
-                                aria-controls="menu-appbar"
-                                aria-haspopup="true"
-                                onClick={handleMenu}
-                                color="inherit"
-                            >
-                                <AccountCircle sx={{ color: "white" }}
-                                    fontSize="large"
-                                />
-                            </IconButton>
-                            <Menu
-                                id="menu-appbar"
-                                anchorEl={anchorEl}
-                                anchorOrigin={{
-                                    vertical: 'top',
-                                    horizontal: 'right',
-                                }}
-                                keepMounted
-                                transformOrigin={{
-                                    vertical: 'top',
-                                    horizontal: 'right',
-                                }}
-                                open={Boolean(anchorEl)}
-                                onClose={handleClose}
-                            >
-                                <MenuItem onClick={handleClose} ><Button href="/" variant="outlined" sx={{ width: '500px', marginBottom: '20px' }}>Profile</Button></MenuItem>
-                                <MenuItem onClick={handleClose}><Button href='/' variant="contained" sx={{ width: '500px', marginBottom: '20px' }} color='secondary' >Logout</Button></MenuItem>
-                            </Menu>
-
+                            <Box>
+                                <IconButton
+                                    size="large"
+                                    aria-label="account of current user"
+                                    aria-controls="menu-appbar"
+                                    aria-haspopup="true"
+                                    onClick={handleMenu}
+                                    color="inherit"
+                                >
+                                    <AccountCircle sx={{ color: "white" }}
+                                        fontSize="large"
+                                    />
+                                </IconButton>
+                                <Menu
+                                    id="menu-appbar"
+                                    anchorEl={anchorEl}
+                                    anchorOrigin={{
+                                        vertical: 'top',
+                                        horizontal: 'right',
+                                    }}
+                                    keepMounted
+                                    transformOrigin={{
+                                        vertical: 'top',
+                                        horizontal: 'right',
+                                    }}
+                                    open={Boolean(anchorEl)}
+                                    onClose={handleClose}
+                                >
+                                    <MenuItem onClick={handleClose} ><Button href="/dashboard" variant="outlined" sx={{ width: '500px', marginBottom: '20px' }}>Home</Button></MenuItem>
+                                    <MenuItem onClick={handleClose} ><Button href="/dashboard/regiments" variant="outlined" sx={{ width: '500px', marginBottom: '20px' }}>Regiments</Button></MenuItem>
+                                    <MenuItem onClick={handleClose} ><Button href="/dashboard/exercises" variant="outlined" sx={{ width: '500px', marginBottom: '20px' }}>Exercises</Button></MenuItem>
+                                    <MenuItem onClick={handleClose}><Button href='/' variant="contained" sx={{ width: '500px', marginBottom: '20px' }} color='secondary' >Logout</Button></MenuItem>
+                                </Menu>
+                            </Box>
                         </>
 
 

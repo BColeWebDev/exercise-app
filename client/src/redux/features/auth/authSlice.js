@@ -1,14 +1,17 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import authService from "./authService"
 
+let token;
 let user;
 // user from local storage
 if (typeof window !== 'undefined') {
     // Perform localStorage action
+    token = JSON.parse(localStorage.getItem("token"))
     user = JSON.parse(localStorage.getItem("user"))
 }
 
 const initialState = {
+    token: token ? token : null,
     user: user ? user : null,
     isError: false,
     isLoading: false,
@@ -23,11 +26,10 @@ export const login = createAsyncThunk('auth/login', async (user, thunkApi) => {
         return await authService.login(user)
 
     } catch (err) {
-        const { status, statusText } = err.response
-        const { error } = err.response.data
-        console.log(error.message)
+
+        const { errors } = err.response.data
         // checks all possible errors returns specific message object
-        const message = `Error: ${status} - Status: ${statusText} - Message ${error.message}`
+        const message = `Error: ${err.response.status} - ${errors.map(err => " Message " + err)}`
         return thunkApi.rejectWithValue(message)
     }
 })
@@ -39,11 +41,10 @@ export const register = createAsyncThunk('auth/register', async (user, thunkApi)
         return await authService.register(user)
 
     } catch (err) {
-        const { status, statusText } = err.response
-        const { error } = err.response.data
-        console.log(error.message)
+        const { errors } = err.response.data
         // checks all possible errors returns specific message object
-        const message = `Error: ${status} - Status: ${statusText} - Message ${error.message}`
+        const message = `Error: ${err.response.status} - ${errors.map(err => " Message " + err)}`
+
         return thunkApi.rejectWithValue(message)
     }
 })
@@ -82,7 +83,6 @@ export const authSlice = createSlice({
             .addCase(register.fulfilled, (state, action) => {
                 state.isLoading = false
                 state.isSuccess = true
-                state.user = action.payload
             })
             .addCase(register.rejected, (state, action) => {
                 state.isLoading = false
