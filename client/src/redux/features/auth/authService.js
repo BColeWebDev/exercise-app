@@ -21,9 +21,7 @@ const logout = () => {
 // Register User
 const register = async (userData) => {
     const response = await axios.post(register_url, userData)
-
     return response.data
-
 }
 
 
