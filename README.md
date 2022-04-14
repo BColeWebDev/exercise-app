@@ -58,11 +58,10 @@ Exercise App is a Full Stack Application that allows users view specific exercis
 
 | Verb | Endpoint              | Result                                 |
 | ---- | --------------------- | -------------------------------------- |
-| GET  | /                     | Home page with list of all restaurants |
-| GET  | /dashboard            | Restaurant detail page                 |
+| GET  | /                     | Landing Page |
+| GET  | /dashboard            | Dashboard Page                 |
 | GET  | /dashboard/exercises  | Exercises Page                         |
 | GET  | /dashboard/regiments  | Regiments Page                         |
-| GET  | /dashboard/nutritions | Nutritions Page                        |
 | GET  | /login                | Login Page                             |
 | GET  | /signup               | Signup Page                            |
 
