@@ -6,111 +6,157 @@
   successColor: #bcd500;
 }
 
+.dashboard {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  width: 100%;
+  min-height: 850px;
+}
+
+.dashboard-wrapper {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  min-height: 100%;
+  width: 100%;
+}
+
+.dashboard-content {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  width: 100%;
+  height: 100%;
+  overflow: scroll;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
 .dashboard-body {
-  padding-left: 0.25rem;
-  padding-right: 0.25rem;
+  padding: 0;
+  border-radius: 6px;
+}
+
+@media (max-width: 599px) {
+  .dashboard-body {
+    max-height: 700px;
+    overflow: scroll;
+  }
+}
+
+@media (min-width: 600px) {
+  .dashboard-body {
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+    max-height: 600px;
+    overflow: scroll;
+  }
+}
+
+.dashboard-body-wrapper {
+  padding: 1rem;
+  overflow: scroll;
+}
+
+@media (max-width: 599px) {
+  .dashboard-body-wrapper {
+    margin-left: 0.75rem;
+    margin-right: 0.75rem;
+  }
+}
+
+@media (min-width: 900px) {
+  .dashboard-body-wrapper {
+    width: 100%;
+  }
 }
 
 .dashboard-body__grid {
   display: -ms-grid;
   display: grid;
-  -ms-grid-columns: 1fr;
-      grid-template-columns: 1fr;
-  gap: 10px;
+  gap: 15px;
   -ms-grid-columns: 1fr 1fr;
       grid-template-columns: 1fr 1fr;
 }
 
 .dashboard-body__list {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
+  padding: 16px 16px;
+  display: block;
 }
 
 .dashboard-card {
-  margin-bottom: 1.125rem;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
 }
 
 .dashboard-card__list {
-  padding: 0.7rem;
+  margin-bottom: 1.125rem;
 }
 
-.dashboard-card__grid {
-  padding: 1rem;
-}
-
-.nav-items {
-  margin-bottom: 15px;
-}
-
-@media (min-width: 768px) {
-  .custom-regiments {
-    border-right: 1px solid gold;
+@media (max-width: 599px) {
+  .dashboard-card__list {
+    max-height: 300px;
   }
-  .dashboard {
-    height: 930px;
-    display: -ms-grid;
-    display: grid;
-    -ms-grid-columns: 0fr 3fr;
-        grid-template-columns: 0fr 3fr;
-  }
-  .side-nav-content {
+}
+
+@media (min-width: 600px) {
+  .dashboard-card__list {
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
-    -webkit-box-orient: vertical;
-    -webkit-box-direction: normal;
-        -ms-flex-direction: column;
-            flex-direction: column;
-  }
-  .side-nav {
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-    -webkit-box-orient: vertical;
-    -webkit-box-direction: normal;
-        -ms-flex-direction: column;
-            flex-direction: column;
-    -ms-flex-pack: distribute;
-        justify-content: space-around;
+    -webkit-box-pack: justify;
+        -ms-flex-pack: justify;
+            justify-content: space-between;
     -webkit-box-align: center;
         -ms-flex-align: center;
             align-items: center;
   }
-  .side-nav .navbar {
+}
+
+.dashboard-card__grid {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+.side-nav {
+  display: none;
+}
+
+@media (min-width: 600px) {
+  .side-nav {
+    height: 100%;
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
-    -webkit-box-pack: center;
-        -ms-flex-pack: center;
-            justify-content: center;
+    background-color: black;
   }
-  .side-nav .navbar .nav-items {
-    padding: 1.75rem;
-  }
-  .side-nav .navbar .nav-items li {
-    cursor: pointer;
-  }
+}
+
+.MuiPagination-ul {
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
 }
 
 html,
 body {
   padding: 0;
   margin: 0;
+  width: 100%;
+  height: 100%;
 }
 
 a {

@@ -20,9 +20,10 @@ const getAllExercises = async (token) => {
         },
     }
     const response = await axios.get(process.env.API_URL + `exercises`, config)
-    console.log(response.data)
     return response.data
 }
+
+
 const getAllBodyParts = async (token) => {
     const config = {
         headers: {

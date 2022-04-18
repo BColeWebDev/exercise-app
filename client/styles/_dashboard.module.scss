@@ -1,68 +1,112 @@
-.dashboard-body{
-  padding-left: 0.25rem;
-  padding-right: 0.25rem;
+.dashboard{
+  display: flex;
+  width: 100%;
+  min-height: 850px;
 
-}
-.dashboard-body__grid{
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 10px;
-  grid-template-columns: 1fr 1fr;
-}
-.dashboard-body__list{
-display: flex;
-flex-direction: column;
-}
+  &-wrapper{
+  display: flex;
+   min-height: 100%;
+  width: 100%;
+  
+  }
 
-.dashboard-card{
-  margin-bottom: 1.125rem;
+  &-content{
   display: flex;
   flex-direction: column;
-  align-items: center;
-}
-
-.dashboard-card__list{
-  padding: 0.7rem;
-}
-.dashboard-card__grid{
-  padding: 1rem;
-}
-
-
-
-.nav-items {
-  margin-bottom: 15px;
-
-}
-@media (min-width: 768px) {
-  .custom-regiments{
-      border-right: 1px solid gold;    
-  }
-  .dashboard {
-    height: 930px;
-    display: grid;
-    grid-template-columns: 0fr 3fr;
+  width: 100%;
+  height: 100%;
+  overflow: scroll;
+  justify-content: space-between;
   }
 
-  .side-nav-content {
-    display: flex;
-    flex-direction: column;
-  }
-  .side-nav {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-    align-items: center;
+  &-body{
+    padding: 0;
+    border-radius: 6px;
+    @include for-phone-only{
+      max-height: 700px;
+      overflow: scroll;
+    }
+    @include for-tablet-portrait-up{
+      width: 90%;
+      margin-left: auto;
+      margin-right: auto;
+      max-height: 600px;
+      overflow: scroll;
+    }
+    @include for-tablet-landscape-up{
+      // padding: 2rem;
+      // width: 60%;
+      // margin-left: auto;
+      // margin-right: auto;
+          
+    }
     
-    .navbar {
-      display: flex;
-      justify-content: center;
-      .nav-items {
-        padding: 1.75rem;
-        li {
-          cursor: pointer;
-        }
-      }
+  }
+  
+  &-body-wrapper{
+    padding: 1rem;
+    overflow: scroll;
+    @include for-phone-only{
+      margin-left: 0.75rem;
+      margin-right: 0.75rem;
+    }
+    @include for-tablet-landscape-up{
+      width: 100%;          
     }
   }
+  &-body__grid{
+  display: grid;
+  gap: 15px;
+ grid-template-columns: 1fr 1fr;
+
+  }
+  &-body__list{
+    padding: 16px 16px;
+    display: block;
+  }
+  // Dashboard Card
+  &-card{
+    display: flex;
+   
+  }
+  &-card__list{
+    margin-bottom: 1.125rem;
+    @include for-phone-only{
+      max-height: 300px;
+    } 
+      @include for-tablet-portrait-up{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
+}
+&-card__grid{
+  display: flex;
+  flex-direction: column;
+}
+}
+
+
+// Side Nav
+  .side-nav {
+    display: none;
+    @include for-tablet-landscape-up; @include for-tablet-portrait-up{
+      height: 100%;
+      display: flex;
+      background-color: black;
+    }
+  }
+ 
+
+
+.MuiPagination-ul{
+  justify-content: center;
+}
+
+
+
+
+
+
+
+

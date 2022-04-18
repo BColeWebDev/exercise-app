@@ -1,9 +1,9 @@
 import React from 'react'
-import Hero from '../src/components/hero'
+import Hero from '../src/components/page-components/hero'
 import { FaSearch, FaFilter, FaPlus } from 'react-icons/fa'
 import Typography from '@mui/material/Typography';
 import { Box } from "@mui/system";
-import Navbar from "../src/components/navbar"
+import Navbar from "../src/components/commons/navbar"
 const LandingPage = () => {
     return (   <>
                 <Navbar routes={{login:"auth/login",register:"auth/register"}} />

@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import logo from "../../public/logo-smaller-white.svg"
+import logo from "../../../public/logo-smaller-white.svg"
 import Image from 'next/image'
 import { Box } from '@mui/material';
 

@@ -3,14 +3,14 @@ import { Box, TextField, Typography, Button, ButtonGroup, FormControl, Container
 import { ToastContainer} from "react-toastify"
 import{useSelector, useDispatch}from "react-redux";
 import {login, reset} from"../../src/redux/features/auth/authSlice";
-import {success, error} from "../../src/components/notifications"
-import Spinner from '../../src/components/spinner';
-import Navbar from '../../src/components/navbar';
+import {success, error} from "../../src/components/commons/notifications"
+import Spinner from '../../src/components/commons/spinner';
+import Navbar from '../../src/components/commons/navbar';
 import {useRouter} from "next/router"
 
 const Login = () => {
     // Global State login
-    const { user, token, isLoading , isError, isSuccess, message} = useSelector((state)=>state.auth)
+    const { user, token, isLoading , isError, message} = useSelector((state)=>state.auth)
     const dispatch = useDispatch()
     const router  = useRouter()
 
@@ -29,19 +29,18 @@ const Login = () => {
     }
 
 
-    // if depencies changes this will run
 useEffect(() => {
     if(isError){
        error(message)
     }
     // // register successful or user logged in go to dashboard
-    if(isSuccess || user){
+    if(user !== null && token !== null){
         router.push('/dashboard')
     }
     // reset global state
     dispatch(reset())
 
-}, [user, token, isError, isSuccess, message, dispatch]);
+}, [user, token, isError, message, dispatch]);
 
 const hanldeSubmit = () => {
     
@@ -60,7 +59,6 @@ const hanldeSubmit = () => {
         <FormControl component="form"
             onSubmit={e => {
                 e.preventDefault()
-
                 hanldeSubmit()
                 setForm(initalState)
             }

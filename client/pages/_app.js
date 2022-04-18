@@ -7,7 +7,6 @@ import CssBaseline from '@mui/material/CssBaseline';
 import { CacheProvider } from '@emotion/react';
 import theme from '../src/theme';
 import createEmotionCache from '../src/createEmotionCache';
-import Navbar from '../src/components/navbar';
 import { store } from '../src/redux/app/store';
 import { Provider } from 'react-redux';
 // Client-side cache shared for the whole session

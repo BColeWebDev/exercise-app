@@ -1,30 +1,21 @@
 import { createTheme } from '@mui/material/styles';
-import { primaryColor, secondaryColor, surfaceColor, errorColor, successColor } from "../styles/_variables.module.scss";
+import { primaryColor, secondaryColor, errorColor, successColor } from "../styles/_variables.module.scss";
 // Create a theme instance.
 const theme = createTheme({
     palette: {
+        mode: 'dark',
         primary: {
             main: primaryColor,
         },
         secondary: {
             main: secondaryColor,
         },
-        background: {
-            paper: '#292929',
-            default: '#121212',
-        },
-        error: {
-            main: errorColor,
-        },
-        text: {
-            primary: '#eeeeee',
-        },
         success: {
             main: successColor,
         },
-    },
-    typography: {
-        fontFamily: 'Poppins',
+        error: {
+            main: errorColor
+        }
     },
 });
 export default theme;

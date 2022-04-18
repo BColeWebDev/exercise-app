@@ -2,7 +2,7 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import exerciseServices from "./exerciseService"
 
 const initialState = {
-    exercises: [],
+    exercises: null,
     isError: false,
     isSuccess: false,
     isLoading: false,

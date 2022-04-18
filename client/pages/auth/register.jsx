@@ -14,11 +14,11 @@ import {
     Container,
     TextareaAutosize
 } from '@mui/material';
-import Navbar from '../../src/components/navbar';
+import Navbar from '../../src/components/commons/navbar';
 import {useRouter} from "next/router"
 import{useSelector, useDispatch}from "react-redux"
-import{error, success} from "../../src/components/notifications"
-import Spinner from "../../src/components/spinner"
+import {success, error} from "../../src/components/commons/notifications"
+import Spinner from '../../src/components/commons/spinner';
 import {reset,register} from"../../src/redux/features/auth/authSlice"
 import { ToastContainer} from "react-toastify"
 
