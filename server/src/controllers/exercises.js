@@ -2,6 +2,7 @@ const needle = require("needle")
 const { Exercise } = require('../models')
 const { v4: uuidv4 } = require('uuid');
 
+let error = { details: [] };
 const proxy = async (method, query) => {
     const options = {
         "headers": {
@@ -19,10 +20,11 @@ const proxy = async (method, query) => {
 const getAllExercises = async (req, res) => {
     try {
         const data = await proxy(req.method)
-        res.json(data)
+        res.status(200).json(data)
 
     } catch (error) {
-        res.json(error)
+        res.status(400).json({ errors: error.details.map(err => err.message) })
+        error.details = []
     }
 }
 
@@ -32,10 +34,11 @@ const getAllBodyParts = async (req, res) => {
 
     try {
         const data = await proxy(req.method, "/bodyPartList")
-        res.json(data)
+        res.status(200).json(data)
 
     } catch (error) {
-        res.json(error)
+        res.status(400).json({ errors: error.details.map(err => err.message) })
+        error.details = []
     }
 }
 
@@ -44,9 +47,10 @@ const getSingleBodyPart = async (req, res) => {
     const name = req.params.name
     try {
         const data = await proxy(req.method, `/bodyPart/${name}`)
-        res.json(data)
+        res.status(200).json(data)
     } catch (error) {
-        res.json(error)
+        res.status(400).json({ errors: error.details.map(err => err.message) })
+        error.details = []
     }
 }
 
@@ -56,7 +60,8 @@ const getAllMuscleGroups = async (req, res) => {
         const data = await proxy(req.method, "/targetList")
         res.json(data)
     } catch (error) {
-        res.json(error)
+        res.status(400).json({ errors: error.details.map(err => err.message) })
+        error.details = []
     }
 }
 
@@ -66,7 +71,9 @@ const getSingleMuscleGroup = async (req, res) => {
         const data = await proxy(req.method, `/target/${name}`)
         res.json(data)
     } catch (error) {
-        res.json(error)
+        res.status(400).json({ errors: error.details.map(err => err.message) })
+        error.details = []
+
     }
 }
 
@@ -76,7 +83,8 @@ const getAllEquipments = async (req, res) => {
         const data = await proxy(req.method, "/equipmentList")
         res.json(data)
     } catch (error) {
-        res.json(error)
+        res.status(400).json({ errors: error.details.map(err => err.message) })
+        error.details = []
     }
 }
 
@@ -86,7 +94,8 @@ const getSingleEquipment = async (req, res) => {
         const data = await proxy(req.method, `/equipment/${name}`)
         res.json(data)
     } catch (error) {
-        res.json(error)
+        res.status(400).json({ errors: error.details.map(err => err.message) })
+        error.details = []
     }
 }
 
@@ -97,9 +106,8 @@ const getByName = async (req, res) => {
         res.json(data)
 
     } catch (error) {
-
-        res.json(error)
-
+        res.status(400).json({ errors: error.details.map(err => err.message) })
+        error.details = []
     }
 }
 
@@ -108,9 +116,10 @@ const createWorkOutPlan = async (req, res) => {
     const id = uuidv4()
     try {
         const exercise = await Exercise.create({ id, ...req.body })
-        res.json(exercise)
+        res.status(200).json(exercise)
     } catch (error) {
-        res.json(error)
+        res.status(400).json({ errors: error.details.map(err => err.message) })
+        error.details = []
     }
 }
 const updateWorkOutPlan = async (req, res) => {
@@ -119,16 +128,19 @@ const updateWorkOutPlan = async (req, res) => {
         const exercise = await Exercise.update(req.body, { where: { id } })
         res.json(exercise)
     } catch (error) {
-        res.json(error)
+        res.status(400).json({ errors: error.details.map(err => err.message) })
+        error.details = []
     }
 }
 const getAllWorkoutPlan = async (req, res) => {
+    const { id } = req.body
     try {
-        const exercise = await Exercise.findAll({})
+        const exercise = await Exercise.findAll({ where: { regimentId: id } })
         res.json(exercise)
 
     } catch (error) {
-        res.json(error)
+        res.status(400).json({ errors: error.details.map(err => err.message) })
+        error.details = []
     }
 }
 const getSingleWorkout = async (req, res) => {
@@ -137,7 +149,8 @@ const getSingleWorkout = async (req, res) => {
         const exercise = await Exercise.findOne({ where: { id } })
         res.json(exercise)
     } catch (error) {
-        res.json(error)
+        res.status(400).json({ errors: error.details.map(err => err.message) })
+        error.details = []
     }
 
 }
@@ -147,7 +160,8 @@ const deleteWorkoutPlan = async (req, res) => {
         const exercise = await Exercise.destroy(req.body, { where: { id } })
         res.json(exercise)
     } catch (error) {
-        res.json(error)
+        res.status(400).json({ errors: error.details.map(err => err.message) })
+        error.details = []
     }
 
 }

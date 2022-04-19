@@ -7,15 +7,17 @@ const awsServices = require('../config/aws')
 let error = { details: [] };
 
 const registerUser = async (req, res) => {
+    const { email } = req.body
     // use uuid and hash password to add to database
 
     // check to see if user already exist
-    const userExist = await User.findOne({ where: { email: req.body.email } })
+    const userExist = await User.findOne({ where: { email: email } })
     if (userExist) {
         error.details.push({ message: "User already exists!" })
         res.status(409).json({ errors: error.details.map(err => err.message) })
         error.details = []
     }
+
     else {
         // destrutures obj
         const { first_name, last_name, email, password, bio, experience } = req.body
@@ -27,6 +29,7 @@ const registerUser = async (req, res) => {
 
         // // Generates JWT token with user ID
         const token = generateToken(id)
+
         // create user 
         const user = await User.create({
             id,
@@ -37,7 +40,7 @@ const registerUser = async (req, res) => {
             bio,
             experience,
         })
-        // if user exist 
+        // send user
         if (user) {
             res.status(200).json(
                 {
@@ -63,9 +66,6 @@ const loginUser = async (req, res) => {
     // check for user email 
     const user = await User.findOne({
         where: { email },
-        include: [
-            { model: Regiment, include: [Training_Day] }
-        ]
     })
 
 
@@ -82,7 +82,6 @@ const loginUser = async (req, res) => {
                 avatar: user.avatar,
                 experience: user.experience,
                 token: generateToken(user.id),
-                regiments: user.Regiments
             }
         )
     } else {

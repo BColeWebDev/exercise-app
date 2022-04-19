@@ -1,14 +1,17 @@
-const { Regiment, Training_Day } = require("../models")
+const { Regiment } = require("../models")
 const { v4: uuidv4 } = require('uuid');
 
-
-// get all regiments 
+let error = { details: [] };
+// Get All Regiments - for user
 const getAllRegiments = async (req, res) => {
+    const { id } = req.body
+    console.log(id)
     try {
-        const regiment = await Regiment.findAll({ include: Training_Day })
+        const regiment = await Regiment.findAll({ where: { userId: id } })
         res.json(regiment)
     } catch (error) {
-        res.json(error)
+        res.status(400).json({ errors: error.details.map(err => err.message) })
+        error.details = []
     }
 }
 
@@ -19,7 +22,8 @@ const getRegimentById = async (req, res) => {
         res.json(regiment)
 
     } catch (error) {
-        res.json(error)
+        res.status(400).json({ errors: error.details.map(err => err.message) })
+        error.details = []
     }
 
 }
@@ -29,10 +33,11 @@ const updateRegiment = async (req, res) => {
         const regiment = await Regiment.update(req.body, {
             where: { id }
         })
-        res.json(regiment)
+        res.status(201).json(regiment)
 
     } catch (error) {
-        res.json(error)
+        res.status(400).json({ errors: error.details.map(err => err.message) })
+        error.details = []
     }
 
 
@@ -45,10 +50,11 @@ const deleteRegiment = async (req, res) => {
         const regiment = await Regiment.destroy({
             where: { id }
         })
-        res.json(regiment)
+        res.status(200).json(regiment)
 
     } catch (error) {
-        res.json(error)
+        res.status(400).json({ errors: error.details.map(err => err.message) })
+        error.details = []
     }
 
 }
@@ -60,10 +66,11 @@ const createRegiment = async (req, res) => {
     try {
         const regiment = await Regiment.create({ id, ...req.body })
 
-        res.status(200).json(regiment)
+        res.status(201).json(regiment)
 
     } catch (error) {
-        res.status(400).json(error)
+        res.status(400).json({ errors: error.details.map(err => err.message) })
+        error.details = []
     }
 }
 module.exports =
