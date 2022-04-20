@@ -1,8 +1,8 @@
-const { User, Regiment, Training_Day } = require("../models")
+const { User } = require("../models")
 const { hash, compare } = require('../config/hash')
 const { generateToken } = require("../config/jwt")
 const { v4: uuidv4 } = require('uuid')
-const awsServices = require('../config/aws')
+const { uploadFile, getFileStream, removeFile, removeAvatar } = require("../config/aws")
 
 let error = { details: [] };
 
@@ -98,27 +98,45 @@ const authOLogin = async (req, res) => {
 
 // Get Avatar Image
 const getAvatar = async (req, res) => {
-    res.json("Get Avatar")
+    const key = req.params.key
+    try {
+        const readStream = await getFileStream(key)
+        readStream.pipe(res)
+
+    } catch (error) {
+        res.status(500).json({ error: error.code })
+    }
 }
 
 // Creating Image Avatar
 const createAvatar = async (req, res) => {
+    const { email } = req.body
     const file = req.file
-    const description = req.body.description
     try {
-        url = await awsServices(fileName, userId)
-        res.status(200).json(url)
+        // Returns file results
+        const results = await uploadFile(file)
+        await removeFile(file.path)
+        // check for user by email and updates avatar on server and pushes to s3
+        await User.update({ avatar: results.Key }, { where: { email } })
+        res.json({ message: "Avatar uploaded" })
+
+    } catch (error) {
+        res.status(500).json(error)
+    }
+}
+
+// Delete Avatar
+const deleteAvatar = async (req, res) => {
+    const key = req.params.key
+    try {
+        await removeAvatar(key)
+        res.json({ message: "Avatar Deleted" })
     } catch (error) {
         res.status(400).json(error)
     }
 }
-// Updating Avatar Image 
-const updateAvatar = async (req, res) => {
-    res.json("Update Avatar")
-}
 
 
 
 
-
-module.exports = { registerUser, loginUser, authOLogin, getAvatar, createAvatar, updateAvatar }
+module.exports = { registerUser, loginUser, authOLogin, getAvatar, createAvatar, deleteAvatar }

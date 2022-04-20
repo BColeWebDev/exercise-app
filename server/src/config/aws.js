@@ -1,33 +1,61 @@
-const AWS = require("aws-sdk")
+const S3 = require("aws-sdk/clients/s3")
+const fs = require("fs")
+const util = require("util")
+const unlinkFile = util.promisify(fs.unlink)
+
+const bucketName = process.env.AWS_BUCKET_NAME
+const region = process.env.AWS_REGION
+const accessKeyId = process.env.AWS_ACCESS_KEY_ID
+const secretAccessKey = process.env.AWS_SECRET_KEY
 
 
-const imageBucket = new AWS.S3({
-    signatureVersion: "v4",
-    accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-    secretAccessKey: process.env.AWS_SECRET_KEY,
-    region: process.env.AWS_REGION
+const s3 = new S3({
+    region,
+    accessKeyId,
+    secretAccessKey
 })
 
-const awsServices = async (image, userId) => {
+// uploads file to S3
+async function uploadFile(file) {
+    // creates file stream
+    const fileStream = fs.createReadStream(file.path)
 
-    // uniquefile-name
-    const imgFile = `${userId}-${image}`
-
-    const config = {
-        Bucket: process.env.AWS_BUCKET_NAME,
-        Key: imgFile,
-        ContentType: 'multipart/form-data',
-        ACL: "public-read"
-    };
-
-    const signedUrl = await imageBucket.getSignedUrl(`${userId} - avatar-img`, config)
-
-    const fileUrl = `https://${process.env.AWS_BUCKET_NAME}.s3.amazonaws.com/${imgFile}`
-
-
-    return { signedUrl, fileUrl }
+    // upload params
+    const uploadParams = {
+        Bucket: bucketName,
+        Body: fileStream,
+        Key: file.filename
+    }
+    // returns an upload promise
+    return s3.upload(uploadParams).promise()
 }
+exports.uploadFile = uploadFile
+
+// downloads file to S3
+async function getFileStream(filekey) {
+    const downloadParams = {
+        Key: filekey,
+        Bucket: bucketName
+    }
+    return s3.getObject(downloadParams).createReadStream()
+
+}
+exports.getFileStream = getFileStream
+
+// Deletes Avatar
+async function removeAvatar(filekey) {
+    const removeParams = {
+        Key: filekey,
+        Bucket: bucketName
+    }
+    return s3.deleteObject(removeParams).promise()
+}
+exports.removeAvatar = removeAvatar
 
 
+// Remove uploads from server
+async function removeFile(path) {
+    return unlinkFile(path)
+}
+exports.removeFile = removeFile
 
-module.exports = awsServices

@@ -4,7 +4,6 @@ const users = require("../controllers/users")
 const { isAuthenticated } = require("../middleware/authMiddleware")
 const { registerIsValid, loginIsValid } = require("../middleware/validation")
 const multer = require('multer')
-
 const upload = multer({ dest: "uploads/" })
 //User Routes Routes 
 
@@ -22,10 +21,11 @@ router.route("/login")
     .post(loginIsValid, users.loginUser)
 router.route("/authO")
     .post(users.authOLogin)
-router.route('/profile')
+router.route('/avatar')
     .post(isAuthenticated, upload.single('image'), users.createAvatar)
-    .put(isAuthenticated, users.updateAvatar)
+router.route('/avatar/:key')
     .get(isAuthenticated, users.getAvatar)
+    .delete(isAuthenticated, users.deleteAvatar)
 
 
 module.exports = router
