@@ -81,6 +81,7 @@ const loginSchema = Joi.object({
 const regimentSchema = Joi.object({
     name: Joi.string()
         .required()
+        .min(3)
         .max(20)
         .messages({
             'string.max': `Regiment name can only have a max of length of 20 characters`,
@@ -90,16 +91,25 @@ const regimentSchema = Joi.object({
 
     description: Joi.string()
         .required()
+        .min(3)
         .max(20)
         .messages({
             'string.max': `Regiment description can only have a max of length of 20 characters`,
-            'any.required': ` Regiment description is required field`
+            'any.required': `Regiment description is required field`
+        }),
+    UserId: Joi.string()
+        .required()
+        .messages({
+            'any.required': `UserID required field`
         })
+
+
 })
 
 const daySchema = Joi.object({
     day: Joi.string()
         .required()
+        .min(3)
         .max(20)
         .messages({
             'string.max': `Training day name can only have a max of length of 20 characters`,
@@ -108,6 +118,7 @@ const daySchema = Joi.object({
     ,
     description: Joi.string()
         .required()
+        .min(3)
         .max(20)
         .messages({
             'string.max': `Training day description can only have a max of length of 20 characters`,
@@ -132,8 +143,8 @@ class Validation {
     }
     // Regiment Valiation 
     regimentValidation = (data) => {
-        const { name, description } = data
-        const response = regimentSchema.validate({ name, description }, { abortEarly: false })
+        const { name, description, UserId } = data
+        const response = regimentSchema.validate({ name, description, UserId }, { abortEarly: false })
         return response
     }
     // Training Days Regiment

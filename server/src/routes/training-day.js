@@ -10,13 +10,15 @@ const { DayIsValid } = require('../middleware/validation')
 // PUT - Update a goal (update day that does exist)
 // DELETE - Delete a goal (delete day that does exist)
 
-router.route('/')
+router.route('/:id')
     .get(trainingCtrl.getTrainingDays)
     .post(DayIsValid, trainingCtrl.createTrainingDay)
-
-router.route('/:id')
     .put(DayIsValid, trainingCtrl.updateTrainingDay)
     .delete(trainingCtrl.deleteTrainingDay)
+
+router.route('/name/:id')
+    .get(trainingCtrl.getTrainingDayById)
+
 
 
 module.exports = router

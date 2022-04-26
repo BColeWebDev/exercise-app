@@ -98,28 +98,51 @@ const authOLogin = async (req, res) => {
 
 // Get Avatar Image
 const getAvatar = async (req, res) => {
-    const key = req.params.key
-    try {
-        const readStream = await getFileStream(key)
-        readStream.pipe(res)
+    const { key } = req.params
+    // Get User 
+    const user = await User.findOne({ where: { id: key } })
+    console.log(!user)
+    if (!user) {
+        error.details.push({ message: 'User could not be found' })
+        res.status(403).json({ errors: error.details.map(err => err.message) })
+        error.details = []
 
-    } catch (error) {
-        res.status(500).json({ error: error.code })
     }
+    // if (!user.avatar) {
+    //     error.details.push({ message: 'User does not have an avatar image' })
+    //     res.status(403).json({ errors: error.details.map(err => err.message) })
+    //     error.details = []
+    // }
+    else {
+        //     // Get User Avatar form S3 bucket
+        try {
+            const readStream = await getFileStream(user.avatar)
+            // if readStream has a status code then return am image of null
+            // else return image 
+            readStream.statusCode ?
+                res.json({ img: null }) :
+                readStream.pipe(res)
+
+        } catch (error) {
+            error.details.push({ message: "Server Connection Failed" })
+            res.status(403).json({ errors: error.details.map(err => err.message) })
+            error.details = []
+        }
+    }
+    console.log(user.avatar)
 }
 
 // Creating Image Avatar
 const createAvatar = async (req, res) => {
-    const { email } = req.body
+    const { id } = req.body
     const file = req.file
     try {
         // Returns file results
         const results = await uploadFile(file)
         await removeFile(file.path)
         // check for user by email and updates avatar on server and pushes to s3
-        await User.update({ avatar: results.Key }, { where: { email } })
-        res.json({ message: "Avatar uploaded" })
-
+        await User.update({ avatar: results.Key }, { where: { id } })
+        res.send({ imagePath: `/images/${results.Key}` })
     } catch (error) {
         res.status(500).json(error)
     }
@@ -130,13 +153,12 @@ const deleteAvatar = async (req, res) => {
     const key = req.params.key
     try {
         await removeAvatar(key)
+        await User.update({ avatar: null }, { where: { id: key } })
         res.json({ message: "Avatar Deleted" })
     } catch (error) {
         res.status(400).json(error)
     }
 }
-
-
 
 
 module.exports = { registerUser, loginUser, authOLogin, getAvatar, createAvatar, deleteAvatar }

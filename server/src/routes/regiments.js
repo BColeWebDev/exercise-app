@@ -11,13 +11,14 @@ const { regimentIsValid } = require("../middleware/validation")
 // PUT - Update a regiment
 // DELETE - Delete a Regiment
 
-router.route("/")
+router.route("/:id")
     .get(regiments.getAllRegiments)
     .post(regimentIsValid, regiments.createRegiment)
-
-router.route("/:id")
-    .get(regiments.getRegimentById)
     .put(regimentIsValid, regiments.updateRegiment)
     .delete(regiments.deleteRegiment)
+
+
+router.route("/name/:id")
+    .get(regiments.getRegimentById)
 
 module.exports = router
