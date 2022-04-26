@@ -3,6 +3,8 @@ import { Box, List, ListItemButton, ListItemIcon, ListItemText, Paper } from "@m
 import FitnessCenterIcon from "@mui/icons-material/FitnessCenter"
 import HomeIcon from "@mui/icons-material/HomeMaxRounded"
 import ContentPasteIcon from '@mui/icons-material/ContentPaste';
+import { ToastContainer } from 'react-toastify';
+
 const DashboardLayout = ({ children, routes }) => {
     return (
         <>
@@ -13,7 +15,7 @@ const DashboardLayout = ({ children, routes }) => {
                     <Paper className="side-nav" component={'header'}>
                         <Box className="side-nav-content">
                             <Paper className="navbar" component={'nav'}>
-                                <List sx={{ display: "flex", flexDirection: "column", backgroundColor: 'black' }}>
+                                <List sx={{ display: "flex", flexDirection: "column", justifyContent: "center" }}>
 
                                     <ListItemButton component={'a'} href={"/dashboard"}  >
                                         <ListItemText primary="Home" color='primary' />
@@ -42,16 +44,12 @@ const DashboardLayout = ({ children, routes }) => {
                     </Paper>
 
                     {/* Dashboard Content */}
-                    {/* 
-
-                    Dashboard Header 
-                    Dashboard Body 
-
-                    */}
                     <Paper className="dashboard-content" elevation={1}>
                         {children}
                     </Paper>
+
                 </Box>
+                <ToastContainer />
             </Box>
         </>);
 }

@@ -7,7 +7,7 @@ import {success, error} from "../../src/components/commons/notifications"
 import Spinner from '../../src/components/commons/spinner';
 import Navbar from '../../src/components/commons/navbar';
 import {useRouter} from "next/router"
-
+ 
 const Login = () => {
     // Global State login
     const { user, token, isLoading , isError, message} = useSelector((state)=>state.auth)
@@ -90,7 +90,6 @@ const hanldeSubmit = () => {
                     label="Email"
                     color="primary"
                     name='email'
-                    focused
                     type="email"
                     autoComplete='username'
                     value={email}
@@ -108,7 +107,6 @@ const hanldeSubmit = () => {
                     id="password"
                     label="Password"
                     color="primary"
-                    focused
                     fullWidth
                     type ='password'
                     name='password'

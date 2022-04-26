@@ -16,6 +16,7 @@ const Exercise = ({ exercise }) => {
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
     return (<>
+        {/* Exercise Card */}
         <Card sx={{ maxWidth: 270, height: "100%", display: "flex", flexDirection: "column", marginBottom: "15px", marginLeft: "auto", marginRight: "auto" }} variant={"outlined"}>
             <CardMedia
                 component="img"
@@ -44,7 +45,7 @@ const Exercise = ({ exercise }) => {
                         <img src={`${gifUrl}`} alt={name} width={260} height={260}></img>
                     </Box>
                 </Container>
-                <Container>
+                <Container sx={{ display: "flex", justifyContent: "center", flexDirection: "column", alignItems: "center" }}>
                     <Box>
                         <Typography variant='body1'>Body Part 💪</Typography>
                     </Box>
@@ -53,7 +54,7 @@ const Exercise = ({ exercise }) => {
                     </Box>
                 </Container>
 
-                <Container>
+                <Container sx={{ display: "flex", justifyContent: "center", flexDirection: "column", alignItems: "center" }}>
                     <Box>
                         <Typography variant='body1'> Muscle Group 💪</Typography>
                     </Box>
@@ -61,7 +62,7 @@ const Exercise = ({ exercise }) => {
                         <Typography variant="h6" textAlign={'center'} >{target}</Typography>
                     </Box>
                 </Container>
-                <Container>
+                <Container sx={{ display: "flex", justifyContent: "center", flexDirection: "column", alignItems: "center" }}>
                     <Box>
                         <Typography variant='body1'> Equipment 💪</Typography>
                     </Box>
