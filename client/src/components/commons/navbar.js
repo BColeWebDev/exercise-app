@@ -37,7 +37,7 @@ const Navbar = ({ routes }) => {
 
 
     return (<>
-        <AppBar position="relative" component="nav" >
+        <AppBar position="relative" component={"nav"} >
             <Toolbar sx={{ display: 'flex', justifyContent: 'space-between', backgroundColor: '#292929' }}>
                 <Logo route={user && token ? "/dashboard" : "/"} />
                 {user === null && token === null ?
