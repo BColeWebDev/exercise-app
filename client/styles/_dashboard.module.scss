@@ -34,10 +34,7 @@
       overflow: scroll;
     }
     @include for-tablet-landscape-up{
-      // padding: 2rem;
-      // width: 60%;
-      // margin-left: auto;
-      // margin-right: auto;
+    
           
     }
     
@@ -55,10 +52,13 @@
     }
   }
   &-body__grid{
-  display: grid;
+     display: grid;
   gap: 15px;
  grid-template-columns: 1fr 1fr;
-
+    @include for-phone-only{
+      display: block;
+    }
+    
   }
   &-body__list{
     padding: 16px 16px;
@@ -67,22 +67,38 @@
   // Dashboard Card
   &-card{
     display: flex;
+    @include for-tablet-portrait-up{
+  
+    }
    
+  }
+  &-card-body{
+  display: "flex"; 
+  flex-direction: "column";
   }
   &-card__list{
     margin-bottom: 1.125rem;
     @include for-phone-only{
-      max-height: 300px;
+      display: flex;
+      flex-direction: column;
     } 
       @include for-tablet-portrait-up{
     display: flex;
-    justify-content: space-between;
-    align-items: center;
+   flex-direction: column;
+   width: 60%;
+   margin-left: auto;
+   margin-right: auto;
 }
+
 }
 &-card__grid{
   display: flex;
-  flex-direction: column;
+  justify-content: center;
+  @include for-desktop-up{
+    width: 75%;
+    margin-left: auto;
+    margin-right: auto;
+  }
 }
 }
 
@@ -93,7 +109,9 @@
     @include for-tablet-landscape-up; @include for-tablet-portrait-up{
       height: 100%;
       display: flex;
-      background-color: black;
+    }
+    &-content{
+      display: flex;   
     }
   }
  

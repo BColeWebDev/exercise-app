@@ -86,6 +86,12 @@
       grid-template-columns: 1fr 1fr;
 }
 
+@media (max-width: 599px) {
+  .dashboard-body__grid {
+    display: block;
+  }
+}
+
 .dashboard-body__list {
   padding: 16px 16px;
   display: block;
@@ -97,13 +103,27 @@
   display: flex;
 }
 
+.dashboard-card-body {
+  display: "flex";
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: "column";
+          flex-direction: "column";
+}
+
 .dashboard-card__list {
   margin-bottom: 1.125rem;
 }
 
 @media (max-width: 599px) {
   .dashboard-card__list {
-    max-height: 300px;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
   }
 }
 
@@ -112,12 +132,13 @@
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
-    -webkit-box-pack: justify;
-        -ms-flex-pack: justify;
-            justify-content: space-between;
-    -webkit-box-align: center;
-        -ms-flex-align: center;
-            align-items: center;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+    width: 60%;
+    margin-left: auto;
+    margin-right: auto;
   }
 }
 
@@ -125,10 +146,17 @@
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+@media (min-width: 1200px) {
+  .dashboard-card__grid {
+    width: 75%;
+    margin-left: auto;
+    margin-right: auto;
+  }
 }
 
 .side-nav {
@@ -141,8 +169,13 @@
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
-    background-color: black;
   }
+}
+
+.side-nav-content {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
 }
 
 .MuiPagination-ul {
@@ -217,5 +250,11 @@ a {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
+}
+
+/* Change the white to any color */
+input:-webkit-autofill,
+input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 30px #313030 inset !important;
 }
 /*# sourceMappingURL=global.css.map */
