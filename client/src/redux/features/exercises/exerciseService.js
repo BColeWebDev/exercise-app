@@ -24,78 +24,31 @@ const getAllExercises = async (token) => {
 }
 
 
-const getAllBodyParts = async (token) => {
+const getAllNames = async (token, query) => {
     const config = {
         headers: {
             Authorization: `Bearer ${token}`,
         },
     }
-    const response = await axios.get(process.env.API_URL + `exercises/targets/`, config)
+    const response = await axios.get(process.env.API_URL + `exercises/${query}`, config)
     return response.data
-
-
 }
-
-const getSingleBodyPart = async (name, token) => {
+const getByName = async (token, query) => {
     const config = {
         headers: {
             Authorization: `Bearer ${token}`,
         },
     }
-    const response = await axios.get(process.env.API_URL + `exercises/targets/${name}`, config)
-    return response.data
-
-}
-
-const getAllMuscleGroups = async (token) => {
-    const config = {
-        headers: {
-            Authorization: `Bearer ${token}`,
-        },
-    }
-    const response = await axios.get(process.env.API_URL + `exercises/muscles}`, config)
+    const response = await axios.get(process.env.API_URL + `exercises/${query}`, config)
     return response.data
 }
 
-const getSingleMuscleGroup = async (name, token) => {
-    const config = {
-        headers: {
-            Authorization: `Bearer ${token}`,
-        },
-    }
-    const response = await axios.get(process.env.API_URL + `exercises/muscles/${name}`, config)
-    return response.data
 
-}
-
-const getAllEquipments = async (token) => {
-    const config = {
-        headers: {
-            Authorization: `Bearer ${token}`,
-        },
-    }
-    const response = await axios.get(process.env.API_URL + `exercises/equipments`, config)
-    return response.data
-}
-const getSingleEquipment = async (name, token) => {
-    const config = {
-        headers: {
-            Authorization: `Bearer ${token}`,
-        },
-    }
-    const response = await axios.get(process.env.API_URL + `exercises/equipments/${name}`, config)
-    return response.data
-
-}
 
 const exerciseServices = {
     getAllExercises,
-    getAllEquipments,
-    getAllBodyParts,
-    getAllMuscleGroups,
-    getSingleBodyPart,
-    getSingleEquipment,
-    getSingleMuscleGroup
+    getAllNames,
+    getByName
 }
 export default exerciseServices
 

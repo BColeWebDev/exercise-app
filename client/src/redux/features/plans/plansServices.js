@@ -4,6 +4,7 @@ import axios from "axios";
 // Plans Route - Creating workout plans 
 
 // GET  - Get all Workout Plans
+// GET - Get Workout Plan (training ID)
 // POST - Create Workout Plans
 // PUT - Update workout Plans (plan ID)
 // DELETE - Delete workout plans (plan ID)

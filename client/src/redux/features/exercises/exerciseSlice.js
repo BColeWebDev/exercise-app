@@ -3,6 +3,7 @@ import exerciseServices from "./exerciseService"
 
 const initialState = {
     exercises: null,
+    names: null,
     isError: false,
     isSuccess: false,
     isLoading: false,
@@ -22,6 +23,34 @@ export const getExercises = createAsyncThunk(
         }
     }
 )
+
+// Get by names
+export const getAllByNames = createAsyncThunk('exercises/names',
+
+    async (query, thunkAPI) => {
+        try {
+            const token = thunkAPI.getState().auth.user
+            return await exerciseServices.getAllNames(token, query)
+        } catch (error) {
+
+            console.log(error)
+        }
+    })
+
+export const getByName = createAsyncThunk('exercises/getName',
+    async (query, thunkAPI) => {
+        try {
+            const token = thunkAPI.getState().auth.user
+            return await exerciseServices.getAllNames(token, query)
+        } catch (error) {
+            console.log(error)
+        }
+    })
+
+
+
+
+
 export const exerciseSlice = createSlice({
     name: 'exercises',
     initialState,
@@ -46,6 +75,37 @@ export const exerciseSlice = createSlice({
                 state.exercises = action.payload
             })
             .addCase(getExercises.rejected, (state, action) => {
+                state.isLoading = false
+                state.isError = true
+                state.message = action.payload
+            })
+
+            // Get All By Names
+            .addCase(getAllByNames.pending, (state) => {
+                state.isLoading = true
+            })
+            .addCase(getAllByNames.fulfilled, (state, action) => {
+                state.isLoading = false
+                state.isSuccess = true
+                state.names = action.payload
+            })
+            .addCase(getAllByNames.rejected, (state, action) => {
+                state.isLoading = false
+                state.isError = true
+                state.message = action.payload
+            })
+
+            // Get By Name
+            .addCase(getByName.pending, (state) => {
+                state.isLoading = true
+            })
+            .addCase(getByName.fulfilled, (state, action) => {
+                state.exercises = null
+                state.isLoading = false
+                state.isSuccess = true
+                state.exercises = action.payload
+            })
+            .addCase(getByName.rejected, (state, action) => {
                 state.isLoading = false
                 state.isError = true
                 state.message = action.payload
