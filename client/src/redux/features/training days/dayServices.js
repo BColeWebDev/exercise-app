@@ -28,7 +28,7 @@ const createDay = async (data, token) => {
             Authorization: `Bearer ${token}`,
         },
     }
-    const response = await axios.post("http://localhost:5000/api/v1/" + `day/${RegimentId}`, { day, description, RegimentId }, config)
+    const response = await axios.post(process.env.API_URL + `day/${RegimentId}`, { day, description, RegimentId }, config)
 
     return response.data
 }
@@ -38,7 +38,7 @@ const getDayById = async (id, token) => {
             Authorization: `Bearer ${token}`,
         },
     }
-    const response = await axios.get("http://localhost:5000/api/v1/" + `day/name/${id}`, config)
+    const response = await axios.get(process.env.API_URL + `day/name/${id}`, config)
     console.log(response.data)
     return response.data
 }
@@ -50,7 +50,7 @@ const updateDay = async (data, token, id) => {
             Authorization: `Bearer ${token}`,
         },
     }
-    const response = await axios.put("http://localhost:5000/api/v1/" + `day/${currentId}`, { day, description, RegimentId: id }, config)
+    const response = await axios.put(process.env.API_URL + `day/${currentId}`, { day, description, RegimentId: id }, config)
     return response.data
 }
 
@@ -61,7 +61,7 @@ const deleteDay = async (token, id) => {
             Authorization: `Bearer ${token}`,
         },
     }
-    const response = await axios.delete("http://localhost:5000/api/v1/" + `day/${id}`, config)
+    const response = await axios.delete(process.env.API_URL + `day/${id}`, config)
 
     return response.data
 }

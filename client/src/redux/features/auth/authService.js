@@ -4,7 +4,7 @@ import axios from "axios"
 const login = async (userData) => {
 
     //process.env.API_URL
-    const response = await axios.post("http://localhost:5000/api/v1/" + 'users/login', userData)
+    const response = await axios.post(process.env.API_URL + 'users/login', userData)
     // returns web token
     const { token } = response.data
     localStorage.setItem('user', JSON.stringify(response.data))
@@ -20,7 +20,7 @@ const logout = () => {
 
 // Register User
 const register = async (userData) => {
-    const response = await axios.post("http://localhost:5000/api/v1/" + "users/register", userData)
+    const response = await axios.post(process.env.API_URL + "users/register", userData)
     return response.data
 }
 
