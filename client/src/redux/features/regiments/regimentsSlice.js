@@ -107,7 +107,7 @@ export const regimentSlice = createSlice({
             .addCase(getAllRegiments.fulfilled, (state, action) => {
                 state.isLoading = false
                 state.isSuccess = true
-                state.regiments = action.payload
+                state.regiments = action.payload === null ? [] : action.payload
             })
             .addCase(getAllRegiments.rejected, (state, action) => {
                 state.isLoading = false
