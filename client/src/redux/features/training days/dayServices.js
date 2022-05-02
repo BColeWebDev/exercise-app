@@ -15,7 +15,7 @@ const getAllDays = async (id, token) => {
             Authorization: `Bearer ${token}`,
         },
     }
-    const response = await axios.get("http://localhost:5000/api/v1/" + `day/${id}`, config)
+    const response = await axios.get(process.env.API_URL + `day/${id}`, config)
     console.log(response)
     return response.data
 
