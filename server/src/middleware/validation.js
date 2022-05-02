@@ -25,7 +25,6 @@ const loginIsValid = async (req, res, next) => {
         next()
         :
         res.status(400).json({ errors: error.details.map(err => err.message) })
-    console.log(error)
 }
 
 const regimentIsValid = async (req, res, next) => {
@@ -42,5 +41,14 @@ const DayIsValid = async (req, res, next) => {
         :
         res.status(400).json({ errors: error.details.map(err => err.message) })
 }
+const exerciseIsValid = async (req, res, next) => {
+    console.log(req.body)
+    const { error } = await validation.exercisesValidation(req.body)
+    console.log(error)
+    error === undefined ?
+        next()
+        :
+        res.status(400).json({ errors: error.details.map(err => err.message) })
+}
 
-module.exports = { registerIsValid, loginIsValid, regimentIsValid, DayIsValid }
+module.exports = { registerIsValid, loginIsValid, regimentIsValid, DayIsValid, exerciseIsValid }

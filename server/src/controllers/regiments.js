@@ -1,4 +1,4 @@
-const { Regiment, Training_Day } = require("../models")
+const { Regiment, Training_Day, Exercise, User } = require("../models")
 const { v4: uuidv4 } = require('uuid');
 
 let error = { details: [] };
@@ -51,37 +51,51 @@ const updateRegiment = async (req, res) => {
 
 // 
 const deleteRegiment = async (req, res) => {
-    // Finds Regiment by PK
-    const regiment = await Regiment.findByPk(req.params.id)
+    // TODO:
 
-    // if no regiment that return error 
-    if (!regiment) {
+    // Delete All Regiments, Training Days and Exercises
+    // Finds Regiment by PK
+    const regiments = await Regiment.findByPk(req.params.id)
+    if (regiments === null) {
         error.details.push({ message: 'Invalid! cannot find Regiment by that ID' })
         res.status(403).json({ errors: error.details.map(err => err.message) })
         error.details = []
-    }
-    const days = await Training_Day.findAll({ where: { regimentId: regiment.id } })
-    if (!days) {
-        error.details.push({ message: 'Invalid! cannot find Days by that ID' })
-        res.status(403).json({ errors: error.details.map(err => err.message) })
-        error.details = []
-    }
-    else {
-        try {
-            // Removes all regiments base off the regimentID
-            await Training_Day.destroy({ where: { regimentId: regiment.id } })
-            await Regiment.destroy({ where: { id: regiment.id } })
+    } else {
+        await Regiment.findByPk(req.params.id)
+            .then(async (regiment) => {
+                console.log(regiment.UserId)
+                const days = await Training_Day.findAll({ where: { regimentId: regiment.id }, include: ["Exercises"] })
+                console.log(regiment.UserId)
+                if (!days) {
+                    error.details.push({ message: 'Invalid! cannot find Days by that ID' })
+                    res.status(403).json({ errors: error.details.map(err => err.message) })
+                    error.details = []
+                }
+                // There are no days or exercises created 
+                // deletes only regiments
+                if (days.length === 0) {
+                    await Regiment.destroy({ where: { id: regiment.id, } })
+                }
+                else {
 
-            res.status(200).json({ message: `Success! Delete ${regiment.name}` })
+                    days[0].Exercises.map(async (data) => {
+                        // Deletes All Exercises
+                        await Exercise.destroy({ where: { id: data.id } })
+                    })
+                    days.map(async (day) => {
+                        // Remove all Training Days 
+                        await Training_Day.destroy({ where: { id: day.id, } })
+                    })
+                    // Remove All Regiments
+                    await Regiment.destroy({ where: { id: regiment.id } })
 
-        } catch (err) {
-            res.json(err)
-            error.details.push({ message: 'Invalid! Cannot delete regiment' })
-            res.status(403).json({ errors: error.details.map(err => err.message) })
-            error.details = []
 
-        }
+                }
+            }
+            ).catch((error) => { res.status(500).json(error) })
     }
+
+
 }
 
 

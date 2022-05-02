@@ -126,6 +126,41 @@ const daySchema = Joi.object({
         })
 })
 
+const exercisesSchema = Joi.object({
+    name: Joi.string()
+        .required()
+        .messages({
+            'any.required': `name is required field`
+        }),
+    equipment: Joi.string()
+        .required()
+        .messages({
+            'any.required': `equipment is required field`
+        }),
+    muscle_target: Joi.string()
+        .required()
+        .messages({
+            'any.required': `Muscle target is required field`
+        }),
+    bodyPart: Joi.string()
+        .required()
+        .messages({
+            'any.required': `Body Part is required field`
+        }),
+    imageUrl: Joi.string()
+        .required()
+        .messages({
+            'any.required': `Image Url is required field`
+        }),
+    TrainingDayId: Joi.string()
+        .required()
+        .messages({
+            'any.required': `Exercises name is required field`
+        })
+
+})
+
+
 class Validation {
 
     // Validation for registering user
@@ -151,6 +186,11 @@ class Validation {
     trainingDaysValidation = (data) => {
         const { day, description } = data
         const response = daySchema.validate({ day, description }, { abortEarly: false })
+        return response
+    }
+    exercisesValidation = (data) => {
+        const { name, equipment, muscle_target, imageUrl, TrainingDayId, bodyPart } = data
+        const response = exercisesSchema.validate({ name, equipment, muscle_target, imageUrl, TrainingDayId, bodyPart }, { abortEarly: false })
         return response
     }
 

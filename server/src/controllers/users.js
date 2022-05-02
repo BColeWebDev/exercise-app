@@ -108,17 +108,18 @@ const getAvatar = async (req, res) => {
         error.details = []
 
     }
-    // if (!user.avatar) {
-    //     error.details.push({ message: 'User does not have an avatar image' })
-    //     res.status(403).json({ errors: error.details.map(err => err.message) })
-    //     error.details = []
-    // }
+    if (!user.avatar) {
+        error.details.push({ message: 'User does not have an avatar image' })
+        res.status(403).json({ errors: error.details.map(err => err.message) })
+        error.details = []
+    }
     else {
         //     // Get User Avatar form S3 bucket
         try {
             const readStream = await getFileStream(user.avatar)
             // if readStream has a status code then return am image of null
             // else return image 
+            console.log(readStream)
             readStream.statusCode ?
                 res.json({ img: null }) :
                 readStream.pipe(res)

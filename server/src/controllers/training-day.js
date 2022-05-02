@@ -1,4 +1,4 @@
-const { Training_Day, } = require("../models")
+const { Training_Day, Exercise, Regiment } = require("../models")
 const { v4: uuidv4 } = require('uuid');
 
 let error = { details: [] };
@@ -70,7 +70,15 @@ const updateTrainingDay = async (req, res) => {
     const { id } = req.params
     const { day, description, RegimentId } = req.body
     // check to see if day exists
+    const dayCheck = await Training_Day.findByPk(id)
+    if (!dayCheck) {
+        error.details.push({ message: "Cannot find Training Day with ID" })
+        res.status(400).json({ errors: error.details.map(err => err.message) })
+        error.details = []
+    }
+
     try {
+
         await Training_Day.update({ day, description }, { where: { id, regimentId: RegimentId } })
         res.status(200).json({ message: `Success! Day updated: ${day}` })
     } catch (err) {
@@ -81,21 +89,47 @@ const updateTrainingDay = async (req, res) => {
 }
 
 const deleteTrainingDay = async (req, res) => {
-    const { id } = req.params
-    try {
-        const day = await Training_Day.destroy({ where: { id } })
-        res.status(200).json({ message: `Success! Day Deleted ` })
-    } catch (err) {
-        error.details.push({ message: "Training Day cannot be deleted! please try again" })
-
+    const { id } = req.params;
+    const day = await Training_Day.findByPk(id)
+    if (!day) {
+        error.details.push({ message: "Cannot find Training Day with ID" })
         res.status(400).json({ errors: error.details.map(err => err.message) })
         error.details = []
     }
+    const exercises = await Exercise.findAll({ where: { TrainingDayId: day.id } })
+    if (!exercises) {
+        error.details.push({ message: "Cannot find Exercises Day with ID" })
+        res.status(400).json({ errors: error.details.map(err => err.message) })
+        error.details = []
+    } else {
+
+        try {
+            // TODO:Remove Training Days with Exercises / Workouts
+
+            // loops through all Exercises and deletes bases off their id's
+            exercises.map(async (data) => {
+                await Exercise.destroy({ where: { id: data.id } })
+            })
+            await Training_Day.destroy({ where: { id } })
+
+            res.json({ message: `Success! Delete ${day.description}` })
+
+        } catch (err) {
+            error.details.push({ message: 'Invalid! cannot find Days by that ID' })
+            res.status(403).json({ errors: error.details.map(err => err.message) })
+            error.details = []
+        }
+    }
+
 }
+
+
+
 
 
 const getTrainingDayById = async (req, res) => {
     const { id } = req.params
+
     const regiment = await Training_Day.findByPk(id)
     if (regiment === null) {
         error.details.push({ message: "Training Day cannot be located!" })

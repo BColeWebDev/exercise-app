@@ -4,16 +4,17 @@ const goalsCtrl = require("../controllers/goals")
 
 // Regiment Routes
 
-// GET - Get All Goals
-// POST Create a Goal 
-// PUT - Update a goal
-// DELETE - Delete a goal
+// GET  - Get all Workout Plans (user ID)
+// POST - Create Workout Plans  (user ID)
+// PUT - Update workout Plans   (user ID)
+// DELETE - Delete workout plans (user ID)
 
-router.route('/')
+router.route('/:id')
     .get(goalsCtrl.getGoals)
     .post(goalsCtrl.createGoal)
     .put(goalsCtrl.updateGoal)
     .delete(goalsCtrl.deleteGoal)
+
 
 
 module.exports = router

@@ -1,5 +1,5 @@
 const needle = require("needle")
-const { Exercise } = require('../models')
+const { Exercise, Training_Day } = require('../models')
 const { v4: uuidv4 } = require('uuid');
 
 let error = { details: [] };
@@ -112,33 +112,62 @@ const getByName = async (req, res) => {
 }
 
 
+// Workout Plans 
+
+// Plans Route - Creating workout plans 
+
+// GET  - Get all Workout Plans (Training ID)
+// GET - Get Workout Plan (Training ID)
+// POST - Create Workout Plans (Training ID)
+// PUT - Update workout Plans (Training ID)
+// DELETE - Delete workout plans (Training ID)
+
+
 const createWorkOutPlan = async (req, res) => {
-    const id = uuidv4()
-    try {
-        const exercise = await Exercise.create({ id, ...req.body })
-        res.status(200).json(exercise)
-    } catch (error) {
-        res.status(400).json({ errors: error.details.map(err => err.message) })
+
+    const day = await Training_Day.findByPk(req.body.TrainingDayId)
+    if (!day) {
+        error.details.push({ message: 'Invalid! Training Day does not exist' })
+        res.status(403).json({ errors: error.details.map(err => err.message) })
         error.details = []
     }
+    else {
+
+        try {
+            const id = uuidv4()
+            const exercise = await Exercise.create({ id, ...req.body })
+            res.status(200).json(exercise)
+        } catch (err) {
+            console.log(err)
+            error.details.push({ message: 'Invalid! Cannot create workout' })
+            res.status(403).json({ errors: error.details.map(err => err.message) })
+            error.details = []
+        }
+    }
+
+
 }
 const updateWorkOutPlan = async (req, res) => {
+    const { id } = req.params
+    const { TrainingDayId } = req.body
     try {
-        const { id } = req.params
-        const exercise = await Exercise.update(req.body, { where: { id } })
-        res.json(exercise)
-    } catch (error) {
-        res.status(400).json({ errors: error.details.map(err => err.message) })
+        await Exercise.update(req.body, { where: { id, TrainingDayId } })
+        res.status(200).json({ message: `Success! Updated ${req.body.name}` })
+    } catch (err) {
+        error.details.push({ message: 'Invalid! update a regiment' })
+        res.status(403).json({ errors: error.details.map(err => err.message) })
         error.details = []
     }
+
 }
 const getAllWorkoutPlan = async (req, res) => {
-    const { id } = req.body
+    const { id } = req.params
     try {
-        const exercise = await Exercise.findAll({ where: { regimentId: id } })
+        const exercise = await Exercise.findAll({ where: { TrainingDayId: id } })
         res.json(exercise)
 
     } catch (error) {
+        error.details.push({ message: 'Invalid! Cannot get all Workouts' })
         res.status(400).json({ errors: error.details.map(err => err.message) })
         error.details = []
     }
@@ -148,22 +177,41 @@ const getSingleWorkout = async (req, res) => {
         const { id } = req.params
         const exercise = await Exercise.findOne({ where: { id } })
         res.json(exercise)
-    } catch (error) {
+    } catch (err) {
+        error.details.push({ message: 'Invalid! cannot find workout with id' })
         res.status(400).json({ errors: error.details.map(err => err.message) })
         error.details = []
     }
 
 }
 const deleteWorkoutPlan = async (req, res) => {
-    try {
-        const { id } = req.params
-        const exercise = await Exercise.destroy(req.body, { where: { id } })
-        res.json(exercise)
-    } catch (error) {
-        res.status(400).json({ errors: error.details.map(err => err.message) })
+    // Finds Regiment by PK
+    const day = await Training_Day.findByPk(req.params.id)
+    // if no regiment that return error 
+    if (!day) {
+        error.details.push({ message: 'Invalid! cannot find day by that ID' })
+        res.status(403).json({ errors: error.details.map(err => err.message) })
         error.details = []
     }
+    const exercises = await Exercise.findAll({ where: { TrainingDayId: day.id } })
+    if (!exercises) {
+        error.details.push({ message: 'Invalid! cannot find Days by that ID' })
+        res.status(403).json({ errors: error.details.map(err => err.message) })
+        error.details = []
+    }
+    else {
+        try {
+            // TODO:remove workout / exercise without affecting Training Day
 
+            await Exercise.destroy({ where: { TrainingDayId: day.id } })
+            res.status(200).json({ message: `Success! Delete from Workout - ${day.description}` })
+
+        } catch (err) {
+            error.details.push({ message: 'Invalid! Cannot delete regiment' })
+            res.status(403).json({ errors: error.details.map(err => err.message) })
+            error.details = []
+        }
+    }
 }
 
 module.exports = {

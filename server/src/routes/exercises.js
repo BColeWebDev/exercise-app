@@ -1,7 +1,7 @@
 const express = require("express")
 const router = express.Router()
 const exercisesCtrl = require("../controllers/exercises")
-
+const { exerciseIsValid } = require("../middleware/validation")
 
 // Exercises Routes
 
@@ -46,14 +46,14 @@ router.route('/name')
 // PUT - Update workout Plans
 // DELETE - Delete workout plans
 
-router.route('/plans')
+router.route('/plans/:id')
     .get(exercisesCtrl.getAllWorkoutPlan)
-    .post(exercisesCtrl.createWorkOutPlan)
-
-router.route("/plans/:id")
-    .get(exercisesCtrl.getSingleWorkout)
-    .put(exercisesCtrl.updateWorkOutPlan)
+    .post(exerciseIsValid, exercisesCtrl.createWorkOutPlan)
+    .put(exerciseIsValid, exercisesCtrl.updateWorkOutPlan)
     .delete(exercisesCtrl.deleteWorkoutPlan)
+
+router.route("/plans/name/:id")
+    .get(exercisesCtrl.getSingleWorkout)
 
 
 module.exports = router
