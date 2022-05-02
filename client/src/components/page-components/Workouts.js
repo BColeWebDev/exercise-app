@@ -39,12 +39,12 @@ const Workouts = ({ id, token, currentId }) => {
             <>
                 <Typography marginBottom={"1.125rem"} color={"secondary"} fontWeight={"bold"}>workouts: {plans.length}</Typography>
                 {plans.map(({ name, equipment, muscle_target, bodyPart, id, imageUrl }) =>
-                    <>
-                        <Box key={id}>
+                    <div key={id}>
+                        <Box>
                             {/* Workout Details */}
                             <Exercise exercise={{ name, equipment, muscle_target, bodyPart, id, gifUrl: imageUrl }} display={'none'} />
                         </Box>
-                    </>
+                    </div>
                 )
                 }
                 <Container sx={{ display: "flex", justifyContent: "center", flexDirection: "ceneter", alignItems: "center" }}>

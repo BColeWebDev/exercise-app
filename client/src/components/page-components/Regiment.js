@@ -13,7 +13,8 @@ const Regiment = ({ regiments, display, handleDelete, handleEdit }) => {
 
             <>
                 {regiments.map(({ name, description, id, createdAt }) =>
-                    <Card key={id} className={` dashboard-card ${display}`} elevation={4} component={'li'}>
+
+                    <Card key={id} className={` dashboard-card ${display ? null : display}`} elevation={4} component={'li'}>
                         <CardContent className={'dashboard-card-body'}>
                             <Box sx={{ display: "flex", justifyContent: "flex-end", width: "100%" }}>
                                 <EditIcon onClick={() => handleEdit(name, description, id)} cursor={'pointer'} sx={{ marginRight: "1.125rem" }} />

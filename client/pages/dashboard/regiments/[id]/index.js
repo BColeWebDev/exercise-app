@@ -163,7 +163,7 @@ const Regiment = ({ id }) => {
                             {/* Body */}
                             <Container>
                                 {days.map((day) =>
-                                    <>
+                                    <div key={day.id}>
                                         <Paper elevation={1} key={day} sx={{ padding: "1rem", marginBottom: "1.125rem" }}>
                                             <Box sx={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
                                                 <Box sx={{ display: 'flex', alignItems: "center", justifyContent: "space-between", marginBottom: "1.125rem" }}>
@@ -189,7 +189,7 @@ const Regiment = ({ id }) => {
                                                 <Workouts id={day.id} currentId={currentRegiment.id} />
                                             </Paper>
                                         </Paper>
-                                    </>
+                                    </div>
 
                                 )}
                             </Container>
