@@ -1,20 +1,39 @@
 import { useState } from 'react';
+import { useDispatch } from "react-redux";
+import { createPlan } from "../../redux/features/plans/plansSlice"
 import Modal from "../commons/modal"
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
-import Image from 'next/image';
+import { useRouter } from "next/router"
 import Typography from '@mui/material/Typography';
 import { Container } from '@mui/material';
 import { Box } from '@mui/system';
 import { FaRegWindowClose } from "react-icons/fa"
-const Exercise = ({ exercise }) => {
-    const { name, gifUrl, target, id, bodyPart, equipment } = exercise;
+import { success } from '../commons/notifications';
+const Exercise = ({ exercise, display }) => {
+
+    // Training Day ID when adding a new exercise 
+    const router = useRouter()
+    const {
+        query: { TrainingDayId, CurrentId },
+    } = router
+    const { name, gifUrl, muscle_target, id, bodyPart, equipment, target } = exercise;
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
+    const dispatch = useDispatch()
+
+    const hanldeSubmit = () => {
+        let obj = { name: name, imageUrl: gifUrl, muscle_target: target, bodyPart: bodyPart, equipment: equipment, TrainingDayId: TrainingDayId }
+        dispatch(createPlan(obj))
+        success("workout added")
+        router.push(`/dashboard/regiments/${CurrentId}`)
+    }
+
+
     return (<>
         {/* Exercise Card */}
         <Card sx={{ maxWidth: 270, height: "100%", display: "flex", flexDirection: "column", marginBottom: "15px", marginLeft: "auto", marginRight: "auto" }} variant={"outlined"}>
@@ -45,30 +64,34 @@ const Exercise = ({ exercise }) => {
                         <img src={`${gifUrl}`} alt={name} width={260} height={260}></img>
                     </Box>
                 </Container>
-                <Container sx={{ display: "flex", justifyContent: "center", flexDirection: "column", alignItems: "center" }}>
-                    <Box>
-                        <Typography variant='body1'>Body Part 💪</Typography>
+                <Container sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
+                    <Box sx={{ marginRight: '10px' }}>
+                        <Typography variant='h6' color={'primary'} >Body Part:</Typography>
                     </Box>
                     <Box>
-                        <Typography variant="h6" textAlign={'center'} >{bodyPart}</Typography>
+                        <Typography variant="subtitle1" textAlign={'center'} color={"secondary"} >{bodyPart}</Typography>
                     </Box>
                 </Container>
 
-                <Container sx={{ display: "flex", justifyContent: "center", flexDirection: "column", alignItems: "center" }}>
-                    <Box>
-                        <Typography variant='body1'> Muscle Group 💪</Typography>
+                <Container sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
+                    <Box sx={{ marginRight: '10px' }}>
+                        <Typography variant='h6' color={'primary'}> Muscle Group: </Typography>
                     </Box>
                     <Box>
-                        <Typography variant="h6" textAlign={'center'} >{target}</Typography>
+                        <Typography variant="body1" textAlign={'center'} color={"secondary"} >{muscle_target === undefined ? target : muscle_target}</Typography>
                     </Box>
                 </Container>
-                <Container sx={{ display: "flex", justifyContent: "center", flexDirection: "column", alignItems: "center" }}>
-                    <Box>
-                        <Typography variant='body1'> Equipment 💪</Typography>
+                <Container sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
+                    <Box sx={{ marginRight: '10px' }}>
+                        <Typography variant='h6' color={'primary'}> Equipment:</Typography>
                     </Box>
                     <Box>
-                        <Typography variant="h6" textAlign={'center'} >{equipment}</Typography>
+                        <Typography variant="body1" textAlign={'center'} color={"secondary"} >{equipment}</Typography>
                     </Box>
+                </Container>
+                <Container sx={{ display: "flex", flexDirection: "column" }}>
+                    {/* Adds exercise if exists */}
+                    {TrainingDayId === undefined ? null : <Button variant='contained' sx={{ display: display }} onClick={() => hanldeSubmit(exercise)}>Add to Regiment</Button>}
                 </Container>
             </Modal>
         </Card>
