@@ -183,11 +183,11 @@ const Regiments = () => {
 
                     }}>
                     <Box sx={{marginBottom:"1.125rem"}}>
-                    <TextField id="name" label="Name" variant="outlined" type={'text'} name="name" value={form.name}  onChange={handleModalChange}  />
+                    <TextField id="name" label="Name" variant="outlined" type={'text'} name="name"  value={form.name}  onChange={handleModalChange} required  />
                     </Box>
 
                     <Box sx={{marginBottom:"1.125rem"}}>
-                    <TextField id="description" label="Description" variant="outlined" type={"text"} value={form.description} name="description" onChange={handleModalChange} />
+                    <TextField id="description" label="Description" variant="outlined" type={"text"} value={form.description} name="description" onChange={handleModalChange} required/>
                     </Box>
 
                     <ButtonGroup sx={{display:"flex", justifyContent:"center"}}>

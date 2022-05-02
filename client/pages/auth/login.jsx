@@ -117,7 +117,7 @@ const hanldeSubmit = () => {
 
             </Box>
             <ButtonGroup sx={{ display: "flex", marginBottom: "2.125rem" }}>
-                <Button variant="contained" sx={{ marginRight: "20px" }} type="submit" >Login</Button>
+                <Button variant="contained" sx={{ marginRight: "20px" }} type="submit" id="login" >Login</Button>
                 <Button variant='outlined' color='secondary' sx={{ whiteSpace: 'nowrap' }} href="/auth/register" >Sign Up</Button>
             </ButtonGroup>
         </Container>
