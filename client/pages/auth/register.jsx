@@ -56,7 +56,7 @@ const SignUp = () => {
     }, [isLoading,isError, isSuccess, message ]);
 
     const [form, setForm] = useState(initalState);
-    const [value, setValue] = useState(' ');
+    const [value, setValue] = useState('beginner');
 
     const handleChange = (event) => {
         setValue(event.target.value);
@@ -118,7 +118,7 @@ const SignUp = () => {
             hanldeSubmit()
         }
         }
-        sx={{ backgroundColor: "#292929", padding:"0.75rem" ,   display: { xs: 'flex' },width:{sm:"50%"}, marginLeft:"auto",marginRight:"auto", marginTop:"3rem" }}
+        sx={{ backgroundColor: "#292929", padding:"0.75rem" , display: { xs: 'flex' },width:{sm:"50%"}, marginLeft:"auto",marginRight:"auto", marginTop:"3rem" }}
 
         autoComplete="off"
     >

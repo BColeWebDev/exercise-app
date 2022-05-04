@@ -35,6 +35,7 @@ useEffect(() => {
     }
     // // register successful or user logged in go to dashboard
     if(user !== null && token !== null){
+        success("Logged In success")
         router.push('/dashboard')
     }
     // reset global state
@@ -53,7 +54,6 @@ const hanldeSubmit = () => {
         return <Spinner/>
     }
     
-
     return (<>
         <Navbar  routes={{login:"login",register:"register"}} />
         <FormControl component="form"
@@ -63,7 +63,7 @@ const hanldeSubmit = () => {
                 setForm(initalState)
             }
             }
-          sx={{ backgroundColor: "#292929", padding:"0.75rem" ,   display: { xs: 'flex' },width:{sm:"50%"}, marginLeft:"auto",marginRight:"auto", marginTop:"3rem" }}
+          sx={{ backgroundColor: "#292929", display: { xs: 'flex' },width:{sm:"50%"}, marginLeft:"auto",marginRight:"auto", marginTop:"12%"  }}
             autoComplete="off"
         >
         <Container sx={{
@@ -80,7 +80,7 @@ const hanldeSubmit = () => {
                 <Typography variant='h3' component='h1' sx={{ textAlign: "center", marginBottom: "2.125rem", marginLeft:"15px", fontWeight: "bold" }} > Login</Typography>
             </Box>
             <Box sx={{
-                width: {xs:'100%', sm:"350px"},
+                width: {xs:'95%', sm:"350px"},
                 marginBottom: "1.125rem"
             }}>
                 <TextField
@@ -98,7 +98,7 @@ const hanldeSubmit = () => {
             </Box>
 
             <Box sx={{
-                width: {xs:'100%', sm:"350px"},
+                width: {xs:'95%', sm:"350px"},
                 marginBottom: "2.125rem",
             }}>
 

@@ -1,12 +1,12 @@
-import { Paper, Typography, Avatar, Container, Box, Link, Modal, Input, FormControl, Button } from "@mui/material"
+import { Paper, Typography, Avatar, Container, Box, Link } from "@mui/material"
 import Badge from "../commons/badge"
 import { ToastContainer } from "react-toastify"
 const Profile = ({ user, regiments }) => {
-    const { firstname, lastname, experience, id, email, bio, token } = user
+    const { firstname, lastname, experience, id, email, bio, } = user
     // Hanlding State 
     return (<>
         {/* Profile */}
-        <Paper elevation={1} sx={{ padding: '1.125rem', maxWidth: "430px", marginLeft: "auto", marginRight: "auto", marginBottom: "1.125rem" }}>
+        <Paper elevation={1} sx={{ padding: '1.125rem', maxWidth: "430px", marginLeft: "auto", marginRight: "auto", marginBottom: "1.125rem", marginTop: "1.125rem" }}>
             <Container sx={{ display: "flex", justifyContent: "space-around", alignItems: "center", padding: "1rem" }}>
                 <Typography variant='h4' component={'h2'} color="primary">Profile</Typography>
                 <Badge label={experience ? experience : "beginner"}></Badge>
@@ -47,10 +47,8 @@ const Profile = ({ user, regiments }) => {
                         <Typography className='h4' component={'h2'}>{regiments.length}</Typography>
                     </Container>
                     <Container sx={{ display: "flex", justifyContent: "center" }}>
-
                         <Link href={'dashboard/regiments'} textAlign={'center'}>Go To Regiments</Link>
                     </Container>
-
                 </>
                 :
                 <>
