@@ -10,16 +10,13 @@
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  width: 100%;
-  min-height: 850px;
 }
 
 .dashboard-wrapper {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  min-height: 100%;
-  width: 100%;
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: -1fr 1fr;
+      grid-template-columns: -1fr 1fr;
 }
 
 .dashboard-content {
@@ -60,15 +57,10 @@
   }
 }
 
-.dashboard-body-wrapper {
-  padding: 1rem;
-  overflow: scroll;
-}
-
 @media (max-width: 599px) {
   .dashboard-body-wrapper {
-    margin-left: 0.75rem;
-    margin-right: 0.75rem;
+    margin-left: 0.25rem;
+    margin-right: 0.25rem;
   }
 }
 
@@ -101,6 +93,18 @@
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+@media (min-width: 600px) {
+  .dashboard-card {
+    width: 50%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 1.125rem;
+  }
 }
 
 .dashboard-card-body {

@@ -37,7 +37,7 @@ const PaginationControlled = ({ data }) => {
             {displayPages}
         </div>
         <Paper elevation={4}>
-            <Pagination count={pageCount} page={pages} onChange={handleChange} size="large" className='pagination' color='secondary' variant="outlined" shape="rounded" />
+            <Pagination count={pageCount} page={pages} onChange={handleChange} size="medium" className='pagination' color='secondary' variant="outlined" shape="rounded" />
 
         </Paper>
     </>);

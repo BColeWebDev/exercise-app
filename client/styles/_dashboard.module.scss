@@ -1,13 +1,8 @@
 .dashboard{
   display: flex;
-  width: 100%;
-  min-height: 850px;
-
   &-wrapper{
-  display: flex;
-   min-height: 100%;
-  width: 100%;
-  
+    display: grid;
+    grid-template-columns: -1fr 1fr;
   }
 
   &-content{
@@ -33,19 +28,12 @@
       max-height: 600px;
       overflow: scroll;
     }
-    @include for-tablet-landscape-up{
-    
-          
-    }
-    
   }
   
   &-body-wrapper{
-    padding: 1rem;
-    overflow: scroll;
     @include for-phone-only{
-      margin-left: 0.75rem;
-      margin-right: 0.75rem;
+      margin-left: 0.25rem;
+      margin-right: 0.25rem;
     }
     @include for-tablet-landscape-up{
       width: 100%;          
@@ -67,10 +55,14 @@
   // Dashboard Card
   &-card{
     display: flex;
+    justify-content: center;
     @include for-tablet-portrait-up{
-  
+      width: 50%;
+      margin-left: auto;
+      margin-right: auto;
+      margin-bottom: 1.125rem;
     }
-   
+
   }
   &-card-body{
   display: "flex"; 

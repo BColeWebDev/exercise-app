@@ -54,7 +54,7 @@ const Exercises = () => {
         {exercises ? <>
             <Paper elevation={2}>
             <Container sx={{marginBottom:"1.125rem" }}>
-            <Typography textAlign={'Center'} padding={'2rem'} variant="h3" component={'h1'}>Exercises</Typography>
+            <Typography textAlign={'Center'} padding={'0.5rem'} variant="h3" component={'h1'}>Exercises</Typography>
             <hr></hr>
             {/* Display Filters */}
             <Container sx={{display:"flex", flexDirection:"column", alignItems:"center"}}>
@@ -67,7 +67,6 @@ const Exercises = () => {
             </Container>
             </Paper>
                {/* Pagination */}
-               
                <Paper elevation={0} sx={{height:"100%"}} className='dashboard-body-wrapper'>
  <PaginationControlled data={exercises}/>
 
