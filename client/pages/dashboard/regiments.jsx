@@ -22,7 +22,7 @@ const Regiments = () => {
     // Global State
     const dispatch = useDispatch()
     const { user, token} = useSelector((state) => state.auth)
-    const { regiments , isError, isSuccess,message} = useSelector((state) => state.regiments)
+    const { regiments , isError, isSuccess,message,isLoading } = useSelector((state) => state.regiments)
       
     // Component State
     const initalState = { list: "secondary", grid: "info", display: "dashboard-body__list", cardDisplay: "dashboard-card__list" }
@@ -88,6 +88,8 @@ const Regiments = () => {
     const handleDelete = (id) =>{
         // Returns a message if success
        dispatch(deleteRegiment(id))
+       dispatch(getAllRegiments())
+
     }
 
 
@@ -114,6 +116,7 @@ const Regiments = () => {
       }
         
     }, [user, token, message, isError, dispatch]);
+
 
     return (
     <>     
