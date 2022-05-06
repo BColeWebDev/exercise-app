@@ -154,6 +154,7 @@ export const regimentSlice = createSlice({
                 state.isLoading = false
                 state.isSuccess = true
                 state.message = action.payload.message
+                state.regiments = state.regiments.filter((regiment) => regiment.id !== regiment.id)
             })
             .addCase(deleteRegiment.rejected, (state, action) => {
                 state.isLoading = false
