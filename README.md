@@ -88,7 +88,7 @@ Exercise App is a Full Stack Application that allows users view specific exercis
 ## 1- Download
 
 ```sh
-git clone https://github.com/ePortfolios/wdd-2203-ColeBrian-FS.git
+git clone https://github.com/BColeWebDev/exercise-app.git
 
 cd wdd-2203-ColeBrian-FS
 
