@@ -24,20 +24,18 @@ const DashboardLayout = ({ children, routes }) => {
                                         </ListItemIcon>
                                     </ListItemButton>
 
-                                    <ListItemButton component={'a'} href={routes.exercises} >
-                                        <ListItemText primary="Exercises" />
-                                        <ListItemIcon>
-                                            <FitnessCenterIcon className="icon" />
-                                        </ListItemIcon>
-                                    </ListItemButton>
-
                                     <ListItemButton component={'a'} href={routes.regiments} >
                                         <ListItemText primary="Regiments" />
                                         <ListItemIcon><ContentPasteIcon className="icon" />
                                         </ListItemIcon>
                                     </ListItemButton>
 
-
+                                    <ListItemButton component={'a'} href={routes.exercises} >
+                                        <ListItemText primary="Exercises" />
+                                        <ListItemIcon>
+                                            <FitnessCenterIcon className="icon" />
+                                        </ListItemIcon>
+                                    </ListItemButton>
                                 </List>
                             </Paper>
                         </Box>

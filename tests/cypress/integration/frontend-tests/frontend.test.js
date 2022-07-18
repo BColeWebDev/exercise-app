@@ -19,7 +19,7 @@ describe('Front End Tests', () => {
     })
     it("Login Page", () => {
         // Login Test
-        cy.login("admin@admin.com", "DragonMasterXD18!")
+        cy.login("dev@dev.com", "Shadow18!")
     })
     it("Sign Up ", () => {
         cy.signup(first_name, last_name, email, password, bio)

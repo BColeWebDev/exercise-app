@@ -9,6 +9,7 @@ import { Container, Typography, Paper, Button,} from "@mui/material";
 import PaginationControlled from "../../src/components/commons/pagination";
 import Filter from "../../src/components/commons/filter"
 import {FaArrowDown, FaArrowUp} from "react-icons/fa"
+import Title from "../../src/components/commons/title";
 
 const Exercises = () => {   
     const dispatch = useDispatch()
@@ -52,10 +53,9 @@ const Exercises = () => {
         <DashboardLayout routes={{regiments:"regiments",exercises:"exercises", profile:"profile"}}>
         {/* Heading */}
         {exercises ? <>
-            <Paper elevation={2}>
+         <Paper elevation={0} >
+        <Title title={"Exercise"}/>
             <Container sx={{marginBottom:"1.125rem" }}>
-            <Typography textAlign={'Center'} padding={'0.5rem'} variant="h3" component={'h1'}>Exercises</Typography>
-            <hr></hr>
             {/* Display Filters */}
             <Container sx={{display:"flex", flexDirection:"column", alignItems:"center"}}>
             <Filter onSubmit={onSubmit} names={names} display={display} />    
@@ -67,9 +67,8 @@ const Exercises = () => {
             </Container>
             </Paper>
                {/* Pagination */}
-               <Paper elevation={0} sx={{height:"100%"}} className='dashboard-body-wrapper'>
+<Paper elevation={5} sx={{height:"100%"}} className='dashboard-body-wrapper'>
  <PaginationControlled data={exercises}/>
-
 </Paper>
         </>
 

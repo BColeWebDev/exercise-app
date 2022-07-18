@@ -6,8 +6,9 @@ import Spinner from "../../src/components/commons/spinner"
 import Navbar from "../../src/components/commons/navbar";
 import DashboardLayout from "../../src/components/page-components/dashboard-layout";
 import {useRouter} from "next/router"
-import { Container,Typography,Paper } from "@mui/material";
+import { Paper } from "@mui/material";
 import Profile from "../../src/components/commons/profile";
+import Title from "../../src/components/commons/title";
 
 
 const Dashboard = () => {
@@ -36,16 +37,15 @@ const Dashboard = () => {
     <>
         <Navbar/>
         <DashboardLayout routes={{regiments:"dashboard/regiments",exercises:"dashboard/exercises", profile:"dashboard/profile"}}>
+          {/* Home Page Title */}
         {
           user ?
           <>
-              <Paper elevation={2}>
-                      <Container sx={{marginBottom:"1.125rem"}}>
-                      <Typography textAlign={'Center'} padding={'2rem'} variant="h3" component={'h1'}>Home</Typography>
-                      <hr></hr>
-                      </Container>
-                    </Paper>     
-               <Paper elevation={0} sx={{height:"100%"}} className='dashboard-body-wrapper'>
+          <Paper elevation={0}>
+          <Title title="Home"/>
+          </Paper>
+            {/* User Profile Section */}
+            <Paper elevation={5} sx={{height:"100%"}} className='dashboard-body-wrapper'>
                  <Profile user={user} regiments={regiments}/>
              </Paper>
           </>      
@@ -56,7 +56,6 @@ const Dashboard = () => {
         }
         </DashboardLayout>
     </>
-    
     :
     <>
     <Spinner/>

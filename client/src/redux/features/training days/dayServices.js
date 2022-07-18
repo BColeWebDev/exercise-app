@@ -16,7 +16,6 @@ const getAllDays = async (id, token) => {
         },
     }
     const response = await axios.get(process.env.API_URL + `day/${id}`, config)
-    console.log(response)
     return response.data
 
 }

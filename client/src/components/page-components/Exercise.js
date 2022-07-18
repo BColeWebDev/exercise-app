@@ -36,7 +36,7 @@ const Exercise = ({ exercise, display }) => {
 
     return (<>
         {/* Exercise Card */}
-        <Card sx={{ maxWidth: 270, height: "100%", display: "flex", flexDirection: "column", marginBottom: "15px", marginLeft: "auto", marginRight: "auto" }} variant={"outlined"}>
+        <Card sx={{ maxWidth: 270, minHeight: 380, display: "flex", flexDirection: "column", marginBottom: "15px", marginLeft: "auto", marginRight: "auto" }} variant={"outlined"} component={"li"}>
             <CardMedia
                 component="img"
                 height="180"

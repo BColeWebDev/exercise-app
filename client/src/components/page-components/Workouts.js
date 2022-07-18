@@ -28,7 +28,7 @@ const Workouts = ({ id, token, currentId }) => {
     return (<>
         {plans.length === 0 ?
 
-            <Container sx={{ display: "flex", justifyContent: "center", flexDirection: "ceneter", alignItems: "center" }}>
+            <Container sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
                 <Button sx={{ textAlign: "center" }} variant="contained"><Link href={{
                     pathname: "/dashboard/exercises",
                     query: { TrainingDayId: TrainingDayId, CurrentId: currentId },
@@ -37,27 +37,23 @@ const Workouts = ({ id, token, currentId }) => {
 
             :
             <>
-                <Typography marginBottom={"1.125rem"} color={"secondary"} fontWeight={"bold"}>workouts: {plans.length}</Typography>
-                {plans.map(({ name, equipment, muscle_target, bodyPart, id, imageUrl }) =>
-                    <div key={id}>
-                        <Box>
-                            {/* Workout Details */}
-                            <Exercise exercise={{ name, equipment, muscle_target, bodyPart, id, gifUrl: imageUrl }} display={'none'} />
-                        </Box>
-                    </div>
-                )
-                }
-                <Container sx={{ display: "flex", justifyContent: "center", flexDirection: "ceneter", alignItems: "center" }}>
-                    <Button sx={{ textAlign: "center" }} variant="contained"><Link href={{
+                <Container sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "1.125rem" }}>
+                    <Typography color={"secondary"} fontWeight={"bold"}>workouts: {plans.length}</Typography>
+                    <Button sx={{ textAlign: "center" }} variant="contained" color="secondary"><Link href={{
                         pathname: "/dashboard/exercises",
                         query: { TrainingDayId: TrainingDayId, CurrentId: currentId },
-                    }} >Add Workout</Link></Button>
+                    }} >Add Workout</Link>
+                    </Button>
                 </Container>
+
+                {plans.map(({ name, equipment, muscle_target, bodyPart, id, imageUrl }) =>
+                    <Box key={id}>
+                        {/* Workout Details */}
+                        <Exercise exercise={{ name, equipment, muscle_target, bodyPart, id, gifUrl: imageUrl }} display={'none'} />
+                    </Box>
+                )
+                }
             </>
-
-
-
-
         }
 
 

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Pagination, Box, Paper } from '@mui/material';
+import { Pagination, Box, Typography } from '@mui/material';
 import usePagination from '../hooks/usePagination';
 import Exercise from '../page-components/Exercise';
 
@@ -32,15 +32,22 @@ const PaginationControlled = ({ data }) => {
 
 
 
-    return (<>
-        <div className='dashboard-body dashboard-body__grid'>
-            {displayPages}
-        </div>
-        <Paper elevation={4}>
-            <Pagination count={pageCount} page={pages} onChange={handleChange} size="medium" className='pagination' color='secondary' variant="outlined" shape="rounded" />
-
-        </Paper>
-    </>);
+    return (
+        <>
+            <Box className={`dashboard-body ${displayPages.length === 0 ? "" : " dashboard-body__grid"}`} sx={{ minHeight: "90%", minWidth: "100%" }}>
+                {displayPages.length === 0 ?
+                    <Box sx={{ display: "flex", justifyContent: "center", padding: ".75rem", alignItems: "center", height: "100%" }}>
+                        <Typography variant="h4" component={"h3"} color="text.secondary">No Options 😔</Typography>
+                    </Box>
+                    :
+                    displayPages
+                }
+            </Box>
+            <Box sx={{ backgroundColor: "black", width: "100%", padding: "10px" }}>
+                <Pagination count={pageCount - 1} page={pages} onChange={handleChange} size="medium" className='pagination' color='secondary' variant="outlined" shape="rounded" />
+            </Box>
+        </>
+    );
 }
 
 export default PaginationControlled;

@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { getRegimentById, } from "../../../../src/redux/features/regiments/regimentsSlice"
 import { error, success } from '../../../../src/components/commons/notifications';
 import { getAllDays, createDay, deleteDay, updateDay } from '../../../../src/redux/features/training days/daySlice';
-
+import Title from '../../../../src/components/commons/title';
 import { Container, Paper, Typography, Box, ButtonGroup, Button, FormControl, TextField, Radio, RadioGroup, FormControlLabel, FormLabel, } from "@mui/material";
 import Workouts from '../../../../src/components/page-components/Workouts';
 import Modal from "../../../../src/components/commons/modal"
@@ -14,6 +14,7 @@ import { FaCalendar, FaRegWindowClose } from "react-icons/fa"
 import { useRouter } from 'next/router'
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
+import Spinner from '../../../../src/components/commons/spinner';
 
 const Regiment = ({ id }) => {
     // Global State
@@ -124,83 +125,43 @@ const Regiment = ({ id }) => {
             <>
                 <Navbar />
                 <DashboardLayout routes={{ regiments: "/dashboard/regiments", exercises: "/dashboard/exercises", profile: "/dashboard/profile" }}>
-                    <Paper elevation={2} sx={{ marginBottom: "1.125rem" }}>
-                        <Container className='dashbord-header' sx={{ marginBottom: "1.125rem" }}>
-                            <Typography sx={{ textAlign: "center", padding: "1rem" }} variant="h3" component={'h1'}>Regiment</Typography>
-                            <hr></hr>
-                        </Container>
-                        <Box sx={{ display: "flex", marginBottom: "1.125rem" }}>
-                            <Container sx={""}>
-                                <Typography variant='h5' component={'h2'} color="primary" sx={{ textAlign: "center" }}>Info</Typography>
-                                <Container sx={{ display: "flex", flexDirection: 'column', alignItems: "center" }}>
-                                    <Box sx={{ display: "flex", alignItems: "center", flexGrow: "2" }}><Typography>{currentRegiment.name}</Typography>
-                                        <Badge label={user.experience ? user.experience : "beginner"}></Badge></Box>
-                                    <Typography variant='subtitle' fontWeight={"bold"} color={'secondary'} component={'h4'}>ID: {currentRegiment.id}</Typography>
-                                </Container>
-                            </Container>
-
-                            <Container>
-                                <Typography component={'h2'} variant='h5' color="primary" sx={{ textAlign: "center" }} >Bio</Typography>
-                                <Container sx={{ display: "flex", justifyContent: "center", alignItems: "center", padding: "1rem" }}>
-                                    <Typography component={"h3"} variant="h6" color={'secondary'}>{currentRegiment.description}</Typography>
-                                    <Box sx={{ display: "flex", alignItems: 'center' }}>
-                                    </Box>
-                                </Container>
-                                <Container>
-                                </Container>
-                            </Container>
-
-                        </Box>
-
-
+                    <Paper elevation={0} >
+                        <Title title={currentRegiment.name} />
                     </Paper>
-                    {/* Regiment Info */}
-                    <Paper variant="outlined" sx={{ height: "100%" }} className='dashboard-body-wrapper' component={'section'} >
-
+                    <Paper elevation={2} className='dashboard-body-wrapper' component={'section'}>
                         {/* Days */}
-                        <Paper elevation={0} sx={{ padding: "1rem" }} component={"article"}>
-                            <Typography component={'h2'} variant='h4' sx={{ textAlign: "center", marginBottom: "1.125rem" }} color="primary" >Training Days</Typography>
+                        <Box sx={{ padding: "0.75rem" }} component={"article"}>
+                            <Typography component={'h4'} variant='h6' sx={{ textAlign: "center", marginBottom: "1.125rem", padding: "2rem" }} color="primary" >Workout Days</Typography>
                             {/* Body */}
                             <Container>
                                 {days.map((day) =>
-                                    <div key={day.id}>
-                                        <Paper elevation={1} key={day} sx={{ padding: "1rem", marginBottom: "1.125rem" }}>
-                                            <Box sx={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-                                                <Box sx={{ display: 'flex', alignItems: "center", justifyContent: "space-between", marginBottom: "1.125rem" }}>
-                                                    <FaCalendar />
-                                                    <Typography sx={{ marginLeft: "10px" }} variant='h5' color={'primary'} fontWeight={'bold'}>{day.day}</Typography>
-                                                </Box>
-                                                <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
-                                                    <Container sx={{ display: "flex", justifyContent: "flex-end" }}>
-                                                        <Box marginRight={"1.125rem"}>
-                                                            <EditIcon cursor={"pointer"} onClick={() => handleEdit(day.day, day.description, day.id)} />
-                                                        </Box>
-                                                        <Box color={'primary'}>
-                                                            <DeleteIcon color="error" onClick={() => handleDelete(day.id)} cursor={"pointer"} />
-                                                        </Box>
-                                                    </Container>
-                                                </Box>
+                                    <Container key={day.id} sx={{ padding: "1rem", marginBottom: "1.125rem" }}>
+                                        <Box sx={{ display: "flex", alignItems: "center", justifyContent: "space-between", flexDirection: { xs: "column", sm: "row" }, marginBottom: "1.125rem" }}>
+                                            <Box sx={{ display: 'flex', alignItems: "center", justifyContent: "space-between", marginBottom: "1.125rem" }}>
+                                                <FaCalendar />
+                                                <Typography sx={{ marginLeft: "20px" }} variant='h5' color={'primary'} fontWeight={'bold'}>{day.day}</Typography>
                                             </Box>
-                                            <Container sx={{ display: "flex", justifyContent: "center", marginBottom: "1.125rem" }}>
-                                                <Typography variant='h4' sx={{ textAlign: "left" }} component={'p'} color="text.secondary">{day.description}</Typography>
-                                            </Container>
-                                            {/* Workout Plans */}
-                                            <Paper elevation={3} sx={{ maxHeight: "600px", overflow: "scroll", padding: "1rem" }}>
-                                                <Workouts id={day.id} currentId={currentRegiment.id} />
-                                            </Paper>
-                                        </Paper>
-                                    </div>
+
+                                            <Typography variant='h4' component={'p'} marginBottom={"1.125rem"} color="text.secondary">{day.description}</Typography>
+
+                                            <Box sx={{ display: "flex", justifyContent: "flex-end", alignItems: "center" }}>
+                                                <ButtonGroup sx={{ display: "flex", justifyContent: "center", marginRight: "20px" }}>
+                                                    {days.length === 7 ? null : <Button variant="contained" fontWeight={'bold'} onClick={handleOpen}>Add a Day</Button>}
+                                                </ButtonGroup>
+                                                <EditIcon cursor={"pointer"} color="secondary" onClick={() => handleEdit(day.day, day.description, day.id)} />
+                                                <DeleteIcon color="error" onClick={() => handleDelete(day.id)} cursor={"pointer"} />
+                                            </Box>
+                                        </Box>
+                                        {/* Workout Plans */}
+                                        <Container variant='outlined' sx={{ maxHeight: "800px", overflow: "scroll", padding: "1rem" }}>
+                                            <Workouts id={day.id} currentId={currentRegiment.id} />
+                                        </Container>
+                                    </Container>
 
                                 )}
                             </Container>
-                            <ButtonGroup sx={{ display: "flex", justifyContent: "center", marginTop: "1.125rem" }}>
-                                {days.length === 7 ? null : <Button variant='outlined' onClick={handleOpen} >Add a Day</Button>}
-                            </ButtonGroup>
-                            <Container>
-                            </Container>
-                        </Paper>
+                        </Box>
                     </Paper>
-
                 </DashboardLayout>
                 {/* Modal Display */}
                 <Modal handleClose={handleClose} open={open} sx={{ display: "flex" }} >
@@ -245,7 +206,7 @@ const Regiment = ({ id }) => {
                 </Modal>
             </>
             :
-            <h1>Error on Load Refresh the Page</h1>
+            <Spinner />
         }
 
     </>

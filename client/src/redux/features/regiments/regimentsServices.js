@@ -29,7 +29,6 @@ const getRegimentById = async (id, token) => {
         },
     }
     const response = await axios.get(process.env.API_URL + `regiments/name/${id}`, config)
-    console.log(response.data)
     return response.data
 }
 

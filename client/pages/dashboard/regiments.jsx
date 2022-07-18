@@ -11,7 +11,7 @@ import Regiment from "../../src/components/page-components/Regiment"
 import FormatListBulletedIcon from "@mui/icons-material/FormatListBulleted";
 import GridViewIcon from "@mui/icons-material/GridView"
 import { FaRegWindowClose } from "react-icons/fa"
-
+import Title from "../../src/components/commons/title"
 
 const Regiments = () => {
     // Modal State
@@ -118,18 +118,21 @@ const Regiments = () => {
     }, [user, token, message, isError, dispatch]);
 
 
+    if(isLoading){
+        return <Spinner/>
+    }
+
     return (
     <>     
   {user && regiments ?
     <>
     <Navbar/>
         <DashboardLayout routes={{regiments:"regiments",exercises:"exercises", profile:"profile"}}>
-
+                
             {/* Regiment Header */}
-            <Paper elevation={2}>
-            <Container className='dashbord-header'  sx={{marginBottom:"1.125rem"}}>
-            <Typography textAlign={'Center'} padding={'1rem'} variant="h3" component={'h1'}>Regiments</Typography>
-            <hr></hr>
+            <Paper elevation={0}>
+            <Title title="Regiments"/>  
+            <Container sx={{marginBottom:"1.125rem", display:"flex", justifyContent:"space-around", alignItems:"center"}}>
             {/*Regiment Buttons */}
             <Box>
             <Box sx={{display:"flex", justifyContent:"flex-start"}}>
@@ -137,7 +140,9 @@ const Regiments = () => {
             </Box>
 
             </Box>
-            <Box sx={{display:"flex",flexDirection:"column-reverse", alignItems:"flex-end"}}>
+
+            {/* List Display Switcher and Results */}
+            <Box sx={{display:"flex",flexDirection:"column-reverse", alignItems:"center",justifyContent:"center"}}>
             <Typography  color="text.primary" fontSize={'20px'}>Results: {regiments.length} </Typography>
 
                 <Container sx={{display:"flex", justifyContent:"flex-end"}} >
@@ -152,9 +157,13 @@ const Regiments = () => {
             </Box>
             </Container>
             </Paper>
-         
-            <Paper className='dashboard-body-wrapper' elevation={0} sx={{height:"100%"}}>
-            <Typography color="papayawhip" variant="h4" textAlign={'center'} component={'h2'}  sx={{marginBottom:"1.125rem"}} >Custom Regiments</Typography>
+           
+
+       
+
+            {/*  Page Title */}
+            <Paper className='dashboard-body-wrapper' elevation={5} sx={{height:"100%"}}>
+            <Typography color="primary" variant="h4" textAlign={'center'} component={'h2'}  sx={{marginBottom:"1.125rem", marginTop:"1.125rem"}} >Custom Regiments</Typography>
             
             {/* All Regiments */}
             {regiments.length === 0 ?
@@ -163,8 +172,6 @@ const Regiments = () => {
             </Box> 
             :
             <Box component={'ul'} className={`dashboard-body ${view.display}`}>
-
-
             <Regiment regiments={regiments} display={view.cardDisplay} handleDelete={handleDelete} handleEdit={handleEdit}/>
              </Box>
             }
