@@ -84,3 +84,25 @@ Exercise App is a Full Stack Application that allows users view specific exercis
 | POST   | /api/v1/exercises/plans     | Create a exercises    |
 | PUT    | /api/v1/exercises/plans/:id | Update a exercises    |
 | DELETE | /api/v1/exercises/plans/:id | Delete a exercises    |
+
+## 1- Download
+
+```sh
+git clone https://github.com/BColeWebDev/exercise-app.git
+
+cd wdd-2203-ColeBrian-FS
+
+place .env file with all environments variables required at root folder
+```
+
+## 2- Usage with CLI
+```sh
+npm run client // runs nextjs application only
+npm run server // runs nodejs server only
+npm run tests // runs cypress for client and server only
+npm run dev // runs both client and server application
+```
+
+## Author
+
+👤 **Brian Cole**
