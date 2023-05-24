@@ -9,7 +9,7 @@ const app = require("./server.js")
 const homeRoutes = require("./src/routes/home")
 app.use(cors())
 
-const PORT = process.env.PORT || 5000
+const PORT = process.env.PORT || 8000
 // Routes Middleware
 app.use("/api/v1", homeRoutes)
 
